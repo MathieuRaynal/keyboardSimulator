@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="keyboard.xsd">
-	<Block>
-		<Key string="A"		x="10" 	y="10" 	width="50" 	height="50"/>
-		<Key string="B" 	x="70" 	y="10" 	width="50" 	height="50"/>
-		<Key string="C" 	x="130" y="10" 	width="50" 	height="50"/>
-	</Block>
-	<Block>
-		<Key string="D"		x="10" 	y="70" 	width="50" 	height="50"/>
-		<Key string="E" 	x="70" 	y="70" 	width="50" 	height="50"/>
-		<Key string="F" 	x="130" y="70" 	width="50" 	height="50"/>
-	</Block>
+	<Key string="A"		x="10" 	y="10" 	width="50" 	height="50"/>
+	<Key string="Z" 	x="70" 	y="10" 	width="50" 	height="50"/>
+	<Key string="E" 	x="130" y="10" 	width="50" 	height="50"/>
+	<Key string="R" 	x="190" y="10" 	width="50" 	height="50"/>
 </Keyboard>
