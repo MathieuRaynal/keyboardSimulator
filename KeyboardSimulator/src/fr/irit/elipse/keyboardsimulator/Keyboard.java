@@ -4,9 +4,14 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+
+import org.xml.sax.*;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 public class Keyboard extends JComponent{
 	private Block layout;
@@ -18,6 +23,10 @@ public class Keyboard extends JComponent{
 	}
 	
 	public void initKeyboard() {
+		loadXMLFile("resources/azerty.xml");
+	}
+	
+	public void init() {
 		layout = new Block("Layout");
 		layout.activate();
 		
@@ -41,8 +50,23 @@ public class Keyboard extends JComponent{
 
 		layout.addChild(line1);
 		layout.addChild(line2);
-		
-		validate();
+	}
+	
+	public void loadXMLFile(String fileName) {
+		layout = new Block("Layout");
+		XMLReader saxReader;
+		try{
+			saxReader = XMLReaderFactory.createXMLReader();
+			saxReader.setContentHandler(new XMLParser(layout));
+			try{
+				InputStreamReader isr = new InputStreamReader(new FileInputStream(fileName),StandardCharsets.UTF_8);
+				InputSource is = new InputSource();
+				is.setCharacterStream(isr);
+				saxReader.parse(is);
+			}catch (IOException e){e.printStackTrace();}
+		}catch (SAXException e) {e.printStackTrace();}
+
+		layout.activate();
 	}
 	
 	public Block getKeyboardLayout(){return layout;}

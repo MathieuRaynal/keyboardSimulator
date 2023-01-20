@@ -26,6 +26,7 @@ public class GUIKeyboard extends JFrame implements KeyListener, Observer{
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
+		keyboard.validate();
 		
 	}
 
@@ -36,10 +37,9 @@ public class GUIKeyboard extends JFrame implements KeyListener, Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		String s = (String)arg;
-		if(s.startsWith("[A]")) {
-//			System.out.println(s.substring(3)+" activé");
-		}else{
-			System.out.print(s);
+		System.out.println(s);
+		if(s.startsWith("[V](K)")){
+			System.out.print(s.substring(6));
 			keyboard.getKeyboardLayout().init();
 			keyboard.getKeyboardLayout().activate();
 			keyboard.getKeyboardLayout().validate();

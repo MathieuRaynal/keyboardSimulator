@@ -12,6 +12,11 @@ public class Block extends Area{
 	private ArrayList<Area> listOfChilds;
 	private int currentChild;
 
+	public Block() {
+		listOfChilds = new ArrayList<Area>();
+		init();
+	}
+	
 	public Block(String name) {
 		this.name = name;
 		listOfChilds = new ArrayList<Area>();
@@ -20,6 +25,8 @@ public class Block extends Area{
 	
 	public void createArea() {
 		if(listOfChilds.size()>0) {
+		
+			name = "";
 			Area a0 = listOfChilds.get(0);
 			if(a0 instanceof Block)
 				((Block)a0).createArea();
@@ -27,9 +34,15 @@ public class Block extends Area{
 			double minY = a0.area.getY();
 			double maxW = a0.area.getX()+a0.area.getWidth();
 			double maxH = a0.area.getY()+a0.area.getHeight();
-			for(Area a:listOfChilds) {
-				if(a instanceof Block)
-					((Block)a).createArea();
+			for(Area a:listOfChilds){
+				String key = "";
+				if(a instanceof Block) {
+					Block b = (Block)a;
+					b.createArea();
+					name += b.name;
+				}else
+					name += ((Key)a).getString();
+				
 				if(minX > a.area.getX())
 					minX = a.area.getX();
 				if(minY > a.area.getY())
@@ -40,7 +53,7 @@ public class Block extends Area{
 					maxH = a.area.getY()+a.area.getHeight();
 			}
 			area = new Rectangle2D.Double(minX-2, minY-2, maxW-minX+4, maxH-minY+4);
-			System.out.println(area);
+//			System.out.println(area);
 		}
 	}
 	
@@ -68,12 +81,13 @@ public class Block extends Area{
 	@Override
 	public void activate(){
 		super.activate();
-		sendInfo("[A]"+name);
+		sendInfo("[A](B)"+name);
 	}
 	
 	@Override
 	public void validate() {
 		if(isActive()){
+			sendInfo("[V](B)"+name);
 			desactivate();
 			getNextChild().activate();
 		}else {
@@ -105,4 +119,6 @@ public class Block extends Area{
 		else
 			super.sendInfo(s);
 	}	
+	
+	public String getName() {return name;}
 }

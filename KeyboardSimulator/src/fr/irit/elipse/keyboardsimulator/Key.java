@@ -22,13 +22,13 @@ public class Key extends Area{
 	@Override
 	public void activate(){
 		super.activate();
-		sendInfo("[A]"+getString());
+		sendInfo("[A](K)"+getString());
 	}
 	
 	@Override
 	public void validate(){
 		desactivate();
-		sendInfo(getString());
+		sendInfo("[V](K)"+getString());
 	}
 
 	@Override
