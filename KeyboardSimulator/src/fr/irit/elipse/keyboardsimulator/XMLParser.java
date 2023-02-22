@@ -28,11 +28,17 @@ public class XMLParser implements ContentHandler{
 			case "key":
 				System.out.println("Nouvelle touche");
 				String string = atts.getValue("string");
+				int indexCharPred = -1;
+				int indexWordPred = -1;
+				if(atts.getValue("indexCharPred")!=null)
+					indexCharPred = Integer.parseInt(atts.getValue("indexCharPred"));
+				if(atts.getValue("indexWordPred")!=null)
+					indexWordPred = Integer.parseInt(atts.getValue("indexWordPred"));
 				int x = Integer.parseInt(atts.getValue("x"));
 				int y = Integer.parseInt(atts.getValue("y"));
 				int width = Integer.parseInt(atts.getValue("width"));
 				int height = Integer.parseInt(atts.getValue("height"));
-				Key k = new Key(string, x, y, width, height);
+				Key k = new Key(string, indexCharPred, indexWordPred, x, y, width, height);
 				currentBlock.addChild(k);
 				break;
 		}

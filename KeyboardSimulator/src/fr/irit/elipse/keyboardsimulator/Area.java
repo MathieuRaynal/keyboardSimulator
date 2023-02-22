@@ -9,7 +9,7 @@ import javax.swing.Timer;
 
 @SuppressWarnings("deprecation")
 public abstract class Area extends Observable implements ActionListener{
-	private static final int DEFAULT_ACTIVATION_TIME = 100;
+	private static final int DEFAULT_ACTIVATION_TIME = 1000;
 	protected Rectangle2D.Double area;
 	private int activationTime;
 	private Block parent;
@@ -27,6 +27,9 @@ public abstract class Area extends Observable implements ActionListener{
 		isActive=false;
 		isValidated=false;
 	}
+
+	public abstract void setChar(List<Character> list);
+	public abstract void setWord(List<String> list);
 	
 	public Rectangle2D.Double getArea(){return area;}
 	

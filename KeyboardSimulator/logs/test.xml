@@ -7,8 +7,8 @@
 	</Word>
 	<Word word="bed">
 		</Key char="b" nbActivationBlock="1" nbValidationBlock="1" nbActivationKey="2" nbValidationKey="1">
-		</Key char="e" nbActivationBlock="2" nbValidationBlock="1" nbActivationKey="2" nbValidationKey="1">
-		</Key char="d" nbActivationBlock="2" nbValidationBlock="1" nbActivationKey="1" nbValidationKey="1">
+		</Key char="e" nbActivationBlock="1" nbValidationBlock="0" nbActivationKey="2" nbValidationKey="1">
+		</Key char="d" nbActivationBlock="1" nbValidationBlock="0" nbActivationKey="1" nbValidationKey="1">
 	</Word>
 	<Word word="bac">
 		</Key char="b" nbActivationBlock="1" nbValidationBlock="1" nbActivationKey="2" nbValidationKey="1">
@@ -16,8 +16,8 @@
 		</Key char="c" nbActivationBlock="1" nbValidationBlock="1" nbActivationKey="3" nbValidationKey="1">
 	</Word>
 	<Word word="def">
-		</Key char="d" nbActivationBlock="2" nbValidationBlock="1" nbActivationKey="1" nbValidationKey="1">
-		</Key char="e" nbActivationBlock="2" nbValidationBlock="1" nbActivationKey="2" nbValidationKey="1">
-		</Key char="f" nbActivationBlock="2" nbValidationBlock="1" nbActivationKey="3" nbValidationKey="1">
+		</Key char="d" nbActivationBlock="1" nbValidationBlock="0" nbActivationKey="1" nbValidationKey="1">
+		</Key char="e" nbActivationBlock="1" nbValidationBlock="0" nbActivationKey="2" nbValidationKey="1">
+		</Key char="f" nbActivationBlock="1" nbValidationBlock="0" nbActivationKey="3" nbValidationKey="1">
 	</Word>
 </KeyboardLog>

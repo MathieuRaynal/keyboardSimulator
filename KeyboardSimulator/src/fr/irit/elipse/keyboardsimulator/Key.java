@@ -5,16 +5,47 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 import java.util.Observable;
 
 @SuppressWarnings("deprecation")
 public class Key extends Area{
 	private String string;
+	private int indexCharPred, indexWordPred;
 	
 	public Key(String s, double x, double y, double w, double h){
 		this.string = s;
+		indexCharPred = -1;
+		indexWordPred = -1;
 		init();
 		area = new Rectangle2D.Double(x, y, w, h);
+	}
+	
+	public Key(String s, int indexCharPred, int indexWordPred, double x, double y, double w, double h){
+		this.string = s;
+		this.indexCharPred = indexCharPred;
+		this.indexWordPred = indexWordPred;
+		init();
+		area = new Rectangle2D.Double(x, y, w, h);
+	}
+	
+	public void setChar(List<Character> list){
+		if(indexCharPred!=-1) {
+			if(list.size()>indexCharPred)
+				string = (String.valueOf(list.get(indexCharPred))).toUpperCase();
+			else
+				string = "";
+		}
+	}
+
+	@Override
+	public void setWord(List<String> list) {
+		if(indexWordPred!=-1) {
+			if(list.size()>indexWordPred)
+				string = (String.valueOf(list.get(indexWordPred))).toUpperCase();
+			else
+				string = "";
+		}
 	}
 	
 	public String getString(){return string;}
