@@ -9,7 +9,7 @@ import javax.swing.Timer;
 
 @SuppressWarnings("deprecation")
 public abstract class Area extends Observable implements ActionListener{
-	private static final int DEFAULT_ACTIVATION_TIME = 1000;
+	private static final int DEFAULT_ACTIVATION_TIME = 50;
 	protected Rectangle2D.Double area;
 	private int activationTime;
 	private Block parent;

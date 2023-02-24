@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Keyboard xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="keyboard.xsd">
+<Keyboard xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="keyboard.xsd" charPrediction="true" wordPrediction="false">
 	<Block>
 		<Key indexCharPred="0"	 string="A"		x="10" 	y="10" 	width="50" 	height="50"/>
 		<Key indexCharPred="1"	 string="B" 	x="70" 	y="10" 	width="50" 	height="50"/>

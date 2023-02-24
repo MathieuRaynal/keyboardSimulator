@@ -9,11 +9,13 @@ import org.xml.sax.SAXException;
 
 public class XMLParser implements ContentHandler{
 	Pile pile;
+	Keyboard keyboard;
 	Block currentBlock;
 	
-	public XMLParser(Block block) {
+	public XMLParser(Keyboard kb){
 		pile = new Pile();
-		currentBlock = block;
+		keyboard = kb;
+		currentBlock = keyboard.getKeyboardLayout();
 	}
 
 	@Override
@@ -21,12 +23,17 @@ public class XMLParser implements ContentHandler{
 		String element = localName.toLowerCase();
 		switch(element){
 			case "block":
-				System.out.println("Nouveau bloc");
 				pile.empiler(currentBlock);
 				currentBlock = new Block();
 				break;
+			case "keyboard":
+				if(atts.getValue("charPrediction")!=null)
+					keyboard.setCharPrediction(Boolean.parseBoolean(atts.getValue("charPrediction")));
+				if(atts.getValue("wordPrediction")!=null)
+					keyboard.setWordPrediction(Boolean.parseBoolean(atts.getValue("wordPrediction")));
+				
+				break;
 			case "key":
-				System.out.println("Nouvelle touche");
 				String string = atts.getValue("string");
 				int indexCharPred = -1;
 				int indexWordPred = -1;

@@ -16,6 +16,7 @@ public class GUIKeyboard extends JFrame implements KeyListener, Observer{
 		
 		keyboard = kb;
 		keyboard.getKeyboardLayout().addObserver(this);
+		keyboard.getKeyboardLayout().addObserver(keyboard);
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 

@@ -1,2 +1,9 @@
-abb bed
-bac def
+a,12
+h,1
+o,2
+v,3
+bonjour,142 
+bonsoir,150
+banane,54
+tout,32
+le,1548

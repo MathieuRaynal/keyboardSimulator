@@ -13,6 +13,7 @@ import java.util.Observer;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import org.lifecompanion.model.impl.textprediction.charprediction.CharPredictor;
 import org.lifecompanion.model.impl.textprediction.charprediction.CharPredictorData;
@@ -28,37 +29,58 @@ import org.xml.sax.*;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 public class Keyboard extends JComponent implements Observer{
+	final File FILE_CHARS = new File("resources/char-predictions.bin");
 	final File FILE_NGRAMS = new File("resources/fr_ngrams.bin");
 	final File FILE_WORDS = new File("resources/fr_words.bin");
 	
 	private Block layout;
+	private boolean charPrediction, wordPrediction;
 	private CharPredictor predictor;
 	private String motEnCours;
 	private WordPredictor wordPredictor;
 	
 	public Keyboard(){
 		super();
+		charPrediction = false;
+		wordPrediction = false;
 		initKeyboard();
 		motEnCours = "";
 		
-		// Prediction de caractères
-		CharPredictorData data = new CharPredictorData();
-		data.executeTraining("bonjour bonsoir tout le monde au revoir je teste avec des phrases enfin des mots juste pour faire du volume et de la longueur dans mon corpus");
-		predictor = new CharPredictor(data);
+//		layout.addObserver(this);
 		
-		// Prédiction de mots
-		LanguageModel languageModel = new FrenchLanguageModel();
-		PredictionParameter predictionParameter = new PredictionParameter(languageModel);
-		try {
-			WordDictionary dictionary = WordDictionary.loadDictionary(languageModel, FILE_WORDS);
-			StaticNGramTrieDictionary ngramDictionary = StaticNGramTrieDictionary.open(FILE_NGRAMS);
-		    wordPredictor = new WordPredictor(predictionParameter, dictionary, ngramDictionary);
-		}catch(Exception e) {
-			e.printStackTrace();
+		if(charPrediction) {
+			// Prediction de caractères
+			CharPredictorData data = new CharPredictorData();
+			try {
+				data.loadFrom(FILE_CHARS);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			predictor = new CharPredictor(data);
 		}
-		
-		layout.addObserver(this);
+		if(wordPrediction) {
+			// Prédiction de mots
+			LanguageModel languageModel = new FrenchLanguageModel();
+			PredictionParameter predictionParameter = new PredictionParameter(languageModel);
+			try {
+				WordDictionary dictionary = WordDictionary.loadDictionary(languageModel, FILE_WORDS);
+				StaticNGramTrieDictionary ngramDictionary = StaticNGramTrieDictionary.open(FILE_NGRAMS);
+			    wordPredictor = new WordPredictor(predictionParameter, dictionary, ngramDictionary);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 		setPreferredSize(new Dimension(600, 500));
+//		JOptionPane.showMessageDialog(null, "Prêt !");
+		layout.activate();
+	}
+	
+	public void setCharPrediction(boolean charPrediction){
+		this.charPrediction = charPrediction;
+	}
+	
+	public void setWordPrediction(boolean wordPrediction){
+		this.wordPrediction = wordPrediction;
 	}
 	
 	public void initKeyboard() {
@@ -66,11 +88,11 @@ public class Keyboard extends JComponent implements Observer{
 	}
 	
 	public void loadXMLFile(String fileName) {
-		layout = new Block("Layout");
+		layout = new Block(Block.RACINE);
 		XMLReader saxReader;
 		try{
 			saxReader = XMLReaderFactory.createXMLReader();
-			saxReader.setContentHandler(new XMLParser(layout));
+			saxReader.setContentHandler(new XMLParser(this));
 			try{
 				InputStreamReader isr = new InputStreamReader(new FileInputStream(fileName),StandardCharsets.UTF_8);
 				InputSource is = new InputSource();
@@ -78,8 +100,6 @@ public class Keyboard extends JComponent implements Observer{
 				saxReader.parse(is);
 			}catch (IOException e){e.printStackTrace();}
 		}catch (SAXException e) {e.printStackTrace();}
-
-		layout.activate();
 	}
 	
 	public Block getKeyboardLayout(){return layout;}
@@ -94,28 +114,48 @@ public class Keyboard extends JComponent implements Observer{
 		layout.paint(g2);
 	}
 
+	public void initLayout(){
+//		System.out.println("****************************************************************************************************");
+		if(charPrediction){
+			motEnCours = "";
+			List<Character> listChar = TextUtils.getCharList(predictor.predict(motEnCours, 100));
+//			System.out.println("--- Saisie : "+motEnCours);
+//			System.out.println("--- Prediction char : "+listChar);
+			layout.setChar(listChar);
+		}
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		String s = (String)arg;
 //		System.out.println(s);
 		if(s.startsWith("[V](K)")){
-			motEnCours += s.substring(6);
-			List<Character> listChar = predictor.predict(motEnCours, 100);
-			System.out.println("--- Saisie : "+motEnCours);
-			System.out.println("--- Prediction char : "+listChar);
-			layout.setChar(listChar);
+			if(s.substring(6).equals(" "))
+				motEnCours = "";
+			else
+				motEnCours += s.substring(6);
 			
-			WordPredictionResult predictionResult;
-			try {
-				predictionResult = wordPredictor.predict(motEnCours);
-				List<String> wordList = new ArrayList<String>();
-				for (WordPrediction prediction : predictionResult.getPredictions())
-					wordList.add(prediction.getPredictionToDisplay());
-				System.out.println("--- Prediction word : "+wordList);
-				layout.setWord(wordList);
-				
-		    } catch (Exception e){
-				e.printStackTrace();
+			if(charPrediction) {
+				List<Character> listChar = TextUtils.getCharList(predictor.predict(motEnCours, 100));
+//				System.out.println("+++ Saisie : "+motEnCours);
+//				System.out.println("--- Prediction char : "+listChar);
+				layout.setChar(listChar);
+			}
+			if(!motEnCours.equals("") && wordPrediction) {
+//				System.out.println("Deb Word Pred");
+				WordPredictionResult predictionResult;
+				try {
+					predictionResult = wordPredictor.predict(motEnCours);
+					List<String> wordList = new ArrayList<String>();
+					for (WordPrediction prediction : predictionResult.getPredictions())
+						wordList.add(prediction.getPredictionToDisplay());
+//					System.out.println("--- Prediction word : "+wordList);
+					layout.setWord(wordList);
+//					System.out.println("Fin Word Pred");
+					
+			    } catch (Exception e){
+					e.printStackTrace();
+				}
 			}
 		}
 	}

@@ -9,6 +9,7 @@ import java.util.Observable;
 
 @SuppressWarnings("deprecation")
 public class Block extends Area{
+	public static final String RACINE = "Layout";
 	private String name;
 	private ArrayList<Area> listOfChilds;
 	private int currentChild;
@@ -26,8 +27,17 @@ public class Block extends Area{
 
 	@Override
 	public void setChar(List<Character> list){
-		for(Area a:listOfChilds)
+		if(!name.equals(RACINE))
+			name = "";
+		for(Area a:listOfChilds){
 			a.setChar(list);
+			if(!name.equals(RACINE)) {
+				if(a instanceof Block)
+					name += ((Block)a).name;
+				else
+					name += ((Key)a).getString();
+			}
+		}
 	}
 
 	@Override

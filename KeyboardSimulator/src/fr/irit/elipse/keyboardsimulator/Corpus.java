@@ -4,10 +4,10 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Corpus{
-	ArrayList<String> list;
+	ArrayList<Mot> wordsList;
 	
 	public Corpus(){
-		list = new ArrayList<String>();
+		wordsList = new ArrayList<Mot>();
 	}
 	
 	public void load(String fileName){
@@ -15,9 +15,8 @@ public class Corpus{
 		   BufferedReader buf = new BufferedReader(new FileReader(fileName));
 		   String line = buf.readLine();
 		   while(line != null){
-			   String[] tab = line.split(" ");
-			   for(String s:tab)
-				   list.add(s);
+			   String[] tab = line.trim().split(",");
+			   wordsList.add(new Mot(tab[0],Integer.parseInt(tab[1])));
 		       line = buf.readLine();
 		   }
 		   buf.close();
@@ -25,16 +24,16 @@ public class Corpus{
 		catch (IOException e){
 		   e.printStackTrace();
 		}
-		System.out.println("Taille corpus : "+list.size());
+		System.out.println("Taille corpus : "+wordsList.size());
 	}
 	
-	public String getNextWord(){
+	public Mot getNextWord(){
 		if(!isEmpty())
-			return list.remove(0);
+			return wordsList.remove(0);
 		return null;
 	}
 	
 	public boolean isEmpty() {
-		return list.size() == 0;
+		return wordsList.size() == 0;
 	}
 }

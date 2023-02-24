@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets;
 
 public class Logger{
 	BufferedWriter txtFile;
-	int nbTab;
+	Mot motEnCours;
 	
 	public Logger(String fileName) {
 		try {
@@ -13,18 +13,19 @@ public class Logger{
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		nbTab = 0;
 	}
 	
 	public void debutSimulation(){
-		addLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-		addLine("<KeyboardLog xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"tba.xsd\">");
-		nbTab++;
+		try {
+			txtFile.write("word;Nb_char (C_w);Freq (F_w);Nb_scan (S_w);Nb_act;S_w x F_w;C_w x F_w");
+			txtFile.newLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void finSimulation(){
-		nbTab--;
-		addLine("</KeyboardLog>");
 		try {
 			txtFile.close();
 		} catch (IOException e) {
@@ -32,25 +33,29 @@ public class Logger{
 		}
 	}
 	
-	public void debutDeMot(String mot){
-		addLine("<Word word=\""+mot+"\">");
-		nbTab++;
+	public void debutDeMot(Mot mot){
+		motEnCours = mot;
+		try {
+			txtFile.write(mot.getMot());
+			txtFile.write(";");
+			txtFile.write(String.valueOf(mot.getNbChar()));
+			txtFile.write(";");
+			txtFile.write(String.valueOf(mot.getFreq()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public void finDeMot() {
-		nbTab--;
-		addLine("</Word>");
-	}
-	
-	public void addCharacter(String s, int nbActivationBlock, int nbValidationBlock, int nbActivationKey, int nbValidationKey) {
-		addLine("</Key char=\""+s+"\" nbActivationBlock=\""+nbActivationBlock+"\" nbValidationBlock=\""+nbValidationBlock+"\" nbActivationKey=\""+nbActivationKey+"\" nbValidationKey=\""+nbValidationKey+"\">");
-	}
-	
-	public void addLine(String texte){
+	public void finDeMot(int nbScan, int nbAct) {
 		try {
-			for(int i=0;i<nbTab;i++)
-				txtFile.write("\t");
-			txtFile.write(texte);
+			txtFile.write(";");
+			txtFile.write(String.valueOf(nbScan));
+			txtFile.write(";");
+			txtFile.write(String.valueOf(nbAct));
+			txtFile.write(";");
+			txtFile.write(String.valueOf(nbScan*motEnCours.getFreq()));
+			txtFile.write(";");
+			txtFile.write(String.valueOf(motEnCours.getNbChar()*motEnCours.getFreq()));
 			txtFile.newLine();
 		} catch (IOException e) {
 			e.printStackTrace();

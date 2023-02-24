@@ -8,22 +8,33 @@ import javax.swing.JFrame;
 public class KeyboardSimulator implements Observer{
 	Corpus corpus;
 	Keyboard keyboard;
-	String mot, saisie;
+	Mot mot;
+	String motEnCours, saisie;
 	int nbActivationBlock, nbValidationBlock, nbActivationKey, nbValidationKey;
 	Logger logger;
 
 	public KeyboardSimulator(Keyboard kb){
 		corpus = new Corpus();
 		corpus.load("resources/corpus.txt");
-		logger = new Logger("logs/test.xml");
+		logger = new Logger("logs/test.csv");
 		logger.debutSimulation();
+		getMot();
+		keyboard = kb;
+		keyboard.getKeyboardLayout().addObserver(this);
+		keyboard.getKeyboardLayout().addObserver(keyboard);
+		keyboard.validate();
+	}
+	
+	public boolean getMot() {
+		if(corpus.isEmpty())
+			return false;
 		mot = corpus.getNextWord();
 		logger.debutDeMot(mot);
+		motEnCours = mot.getMot();
 		saisie = "";
-		keyboard = kb;
 		initNb();
-		keyboard.getKeyboardLayout().addObserver(this);
-		keyboard.validate();
+		System.out.println("---------------- Mot à saisir : "+motEnCours);
+		return true;
 	}
 	
 	public void initNb(){
@@ -31,10 +42,6 @@ public class KeyboardSimulator implements Observer{
 		nbValidationBlock = 0;
 		nbActivationKey = 0;
 		nbValidationKey = 0;
-	}
-	
-	public void simuleMot(String mot) {
-		
 	}
 
 	@Override
@@ -47,13 +54,13 @@ public class KeyboardSimulator implements Observer{
 			switch(prefixe) {
 				case "[A](B)":
 					nbActivationBlock++;
-					if(res.contains(mot.subSequence(0, 1))) {
+					if(res.contains(motEnCours.subSequence(0, 1))) {
 						keyboard.validate();
 					}
 				break;
 				case "[A](K)":
 					nbActivationKey++;
-					if(res.equals(mot.subSequence(0, 1))) {
+					if(res.equals(motEnCours.subSequence(0, 1))) {
 						keyboard.validate();
 					}
 				break;
@@ -62,25 +69,19 @@ public class KeyboardSimulator implements Observer{
 				break;
 				case "[V](K)":
 					saisie = saisie + res;
-					mot = mot.substring(res.length());
+					motEnCours = motEnCours.substring(res.length());
 					nbValidationKey++;
-					logger.addCharacter(res, nbActivationBlock, nbValidationBlock, nbActivationKey, nbValidationKey);
-					initNb();
-					System.out.println("*************************** Saisie : "+saisie);
-					System.out.println("Validation Key : "+nbValidationKey);
+//					System.out.println("*** Saisie : "+saisie);
 					
-					if(mot.length()==0){
+					if(motEnCours.length()==0){
 						System.out.println("Mot termine");
-						logger.finDeMot();
+						logger.finDeMot(nbActivationBlock+nbActivationKey,nbValidationBlock+nbValidationKey);
 						if(corpus.isEmpty()){
 							System.out.println("Saisie terminee");
 							logger.finSimulation();
 						}else{
-							System.out.print("Mot suivant : ");
-							mot = corpus.getNextWord();
-							System.out.println(mot);
-							logger.debutDeMot(mot);
-							saisie = "";
+							getMot();
+							keyboard.initLayout();
 							keyboard.getKeyboardLayout().init();
 							keyboard.getKeyboardLayout().activate();
 							keyboard.getKeyboardLayout().validate();
