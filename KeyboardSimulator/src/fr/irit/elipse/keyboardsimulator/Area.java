@@ -9,15 +9,14 @@ import javax.swing.Timer;
 
 @SuppressWarnings("deprecation")
 public abstract class Area extends Observable implements ActionListener{
-	private static final int DEFAULT_ACTIVATION_TIME = 50;
 	protected Rectangle2D.Double area;
 	private int activationTime;
 	private Block parent;
 	private boolean isSelected, isActive, isValidated;
 	protected Timer activeTimer;
 	
-	public Area(){
-		activationTime = DEFAULT_ACTIVATION_TIME;
+	public Area(int activationTime){
+		this.activationTime = activationTime;
 		activeTimer = new Timer(activationTime, this);
 		parent = null;
 	}
@@ -28,6 +27,7 @@ public abstract class Area extends Observable implements ActionListener{
 		isValidated=false;
 	}
 
+	public abstract void setLocalChar(List<Character> list);
 	public abstract void setChar(List<Character> list);
 	public abstract void setWord(List<String> list);
 	

@@ -14,12 +14,14 @@ public class Block extends Area{
 	private ArrayList<Area> listOfChilds;
 	private int currentChild;
 
-	public Block() {
+	public Block(int activationTime){
+		super(activationTime);
 		listOfChilds = new ArrayList<Area>();
 		init();
 	}
 	
-	public Block(String name) {
+	public Block(String name, int activationTime){
+		super(activationTime);
 		this.name = name;
 		listOfChilds = new ArrayList<Area>();
 		init();
@@ -37,6 +39,24 @@ public class Block extends Area{
 				else
 					name += ((Key)a).getString();
 			}
+		}
+	}
+	
+	public void setLocalChar(List<Character> list){
+		System.out.println("--------------------------------------------------");
+		System.out.println(list);
+		if(!name.equals(RACINE)){
+			ArrayList<Character> localList = new ArrayList<Character>();
+			for(Character c:list) 
+				if(name.contains(String.valueOf(c).toUpperCase()))
+					localList.add(c);
+
+			System.out.println(localList);
+			for(Area a:listOfChilds)
+				a.setLocalChar(localList);
+		}else {
+			for(Area a:listOfChilds)
+				a.setLocalChar(list);
 		}
 	}
 

@@ -11,9 +11,10 @@ import java.util.Observable;
 @SuppressWarnings("deprecation")
 public class Key extends Area{
 	private String string;
-	private int indexCharPred, indexWordPred;
+	private int indexLocalCharPred, indexCharPred, indexWordPred;
 	
-	public Key(String s, double x, double y, double w, double h){
+	public Key(int activationTime, String s, double x, double y, double w, double h){
+		super(activationTime);
 		this.string = s;
 		indexCharPred = -1;
 		indexWordPred = -1;
@@ -21,12 +22,23 @@ public class Key extends Area{
 		area = new Rectangle2D.Double(x, y, w, h);
 	}
 	
-	public Key(String s, int indexCharPred, int indexWordPred, double x, double y, double w, double h){
+	public Key(int activationTime, String s, int indexLocalCharPred, int indexCharPred, int indexWordPred, double x, double y, double w, double h){
+		super(activationTime);
 		this.string = s;
+		this.indexLocalCharPred = indexLocalCharPred;
 		this.indexCharPred = indexCharPred;
 		this.indexWordPred = indexWordPred;
 		init();
 		area = new Rectangle2D.Double(x, y, w, h);
+	}
+	
+	public void setLocalChar(List<Character> list){
+		if(indexLocalCharPred!=-1) {
+			if(list.size()>indexLocalCharPred)
+				string = (String.valueOf(list.get(indexLocalCharPred))).toUpperCase();
+			else
+				string = "";
+		}
 	}
 	
 	public void setChar(List<Character> list){

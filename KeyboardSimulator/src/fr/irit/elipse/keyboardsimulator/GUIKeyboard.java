@@ -9,6 +9,7 @@ import java.util.Observer;
 import javax.swing.JFrame;
 
 public class GUIKeyboard extends JFrame implements KeyListener, Observer{
+	private static final int DEFAULT_ACTIVATION_TIME = 1000;
 	Keyboard keyboard;
 	
 	public GUIKeyboard(Keyboard kb){
@@ -49,6 +50,6 @@ public class GUIKeyboard extends JFrame implements KeyListener, Observer{
 	}
 	
 	public static void main(String[] args) {
-		new GUIKeyboard(new Keyboard());
+		new GUIKeyboard(new Keyboard(DEFAULT_ACTIVATION_TIME));
 	}
 }

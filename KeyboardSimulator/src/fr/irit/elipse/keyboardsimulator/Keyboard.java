@@ -34,21 +34,22 @@ public class Keyboard extends JComponent implements Observer{
 	final File FILE_WORDS = new File("resources/fr_words.bin");
 	
 	private Block layout;
-	private boolean charPrediction, wordPrediction;
+	private int activationTime;
+	private boolean localCharPrediction, charPrediction, wordPrediction;
 	private CharPredictor predictor;
 	private String motEnCours;
 	private WordPredictor wordPredictor;
 	
-	public Keyboard(){
+	public Keyboard(int activationTime){
 		super();
+		this.activationTime = activationTime;
+		localCharPrediction = false;
 		charPrediction = false;
 		wordPrediction = false;
 		initKeyboard();
 		motEnCours = "";
 		
-//		layout.addObserver(this);
-		
-		if(charPrediction) {
+		if(localCharPrediction || charPrediction) {
 			// Prediction de caractères
 			CharPredictorData data = new CharPredictorData();
 			try {
@@ -71,12 +72,19 @@ public class Keyboard extends JComponent implements Observer{
 			}
 		}
 		setPreferredSize(new Dimension(600, 500));
-//		JOptionPane.showMessageDialog(null, "Prêt !");
 		layout.activate();
+	}
+	
+	public int getActivationTime() {
+		return activationTime;
 	}
 	
 	public void setCharPrediction(boolean charPrediction){
 		this.charPrediction = charPrediction;
+	}
+	
+	public void setLocalCharPrediction(boolean localCharPrediction){
+		this.localCharPrediction = localCharPrediction;
 	}
 	
 	public void setWordPrediction(boolean wordPrediction){
@@ -88,7 +96,7 @@ public class Keyboard extends JComponent implements Observer{
 	}
 	
 	public void loadXMLFile(String fileName) {
-		layout = new Block(Block.RACINE);
+		layout = new Block(Block.RACINE, activationTime);
 		XMLReader saxReader;
 		try{
 			saxReader = XMLReaderFactory.createXMLReader();
@@ -115,43 +123,43 @@ public class Keyboard extends JComponent implements Observer{
 	}
 
 	public void initLayout(){
-//		System.out.println("****************************************************************************************************");
 		if(charPrediction){
 			motEnCours = "";
 			List<Character> listChar = TextUtils.getCharList(predictor.predict(motEnCours, 100));
-//			System.out.println("--- Saisie : "+motEnCours);
-//			System.out.println("--- Prediction char : "+listChar);
 			layout.setChar(listChar);
+		}
+		if(localCharPrediction){
+			motEnCours = "";
+			List<Character> listChar = TextUtils.getCharList(predictor.predict(motEnCours, 100));
+			layout.setLocalChar(listChar);
 		}
 	}
 	
 	@Override
 	public void update(Observable o, Object arg) {
 		String s = (String)arg;
-//		System.out.println(s);
 		if(s.startsWith("[V](K)")){
 			if(s.substring(6).equals(" "))
 				motEnCours = "";
 			else
 				motEnCours += s.substring(6);
-			
+
+			if(localCharPrediction) {
+				List<Character> listChar = TextUtils.getCharList(predictor.predict(motEnCours, 100));
+				layout.setLocalChar(listChar);
+			}
 			if(charPrediction) {
 				List<Character> listChar = TextUtils.getCharList(predictor.predict(motEnCours, 100));
-//				System.out.println("+++ Saisie : "+motEnCours);
-//				System.out.println("--- Prediction char : "+listChar);
 				layout.setChar(listChar);
 			}
 			if(!motEnCours.equals("") && wordPrediction) {
-//				System.out.println("Deb Word Pred");
 				WordPredictionResult predictionResult;
 				try {
 					predictionResult = wordPredictor.predict(motEnCours);
 					List<String> wordList = new ArrayList<String>();
 					for (WordPrediction prediction : predictionResult.getPredictions())
 						wordList.add(prediction.getPredictionToDisplay());
-//					System.out.println("--- Prediction word : "+wordList);
 					layout.setWord(wordList);
-//					System.out.println("Fin Word Pred");
 					
 			    } catch (Exception e){
 					e.printStackTrace();

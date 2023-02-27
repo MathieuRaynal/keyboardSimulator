@@ -6,6 +6,7 @@ import java.util.Observer;
 import javax.swing.JFrame;
 
 public class KeyboardSimulator implements Observer{
+	private static final int DEFAULT_ACTIVATION_TIME = 10;
 	Corpus corpus;
 	Keyboard keyboard;
 	Mot mot;
@@ -100,9 +101,9 @@ public class KeyboardSimulator implements Observer{
 	}
 	
 	public static void main(String[] args){
-		new KeyboardSimulator(new Keyboard());
+		new KeyboardSimulator(new Keyboard(DEFAULT_ACTIVATION_TIME));
 		JFrame f = new JFrame();
-		f.setDefaultCloseOperation(f.EXIT_ON_CLOSE);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
 	}
 }
