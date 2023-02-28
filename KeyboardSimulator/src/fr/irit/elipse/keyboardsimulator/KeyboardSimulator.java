@@ -55,13 +55,20 @@ public class KeyboardSimulator implements Observer{
 			switch(prefixe) {
 				case "[A](B)":
 					nbActivationBlock++;
-					if(res.contains(motEnCours.subSequence(0, 1))) {
+					if(keyboard.containsWord(saisie+motEnCours)) {
+						if(containsWord(res, saisie+motEnCours))
+							keyboard.validate();
+					}else if(res.contains(motEnCours.subSequence(0, 1))) {
 						keyboard.validate();
 					}
 				break;
 				case "[A](K)":
 					nbActivationKey++;
-					if(res.equals(motEnCours.subSequence(0, 1))) {
+					System.out.println("Activation : "+res+" / "+saisie+" / "+motEnCours);
+					if(keyboard.containsWord(saisie+motEnCours)) {
+						if(res.equals(saisie+motEnCours))
+							keyboard.validate();
+					}else if(res.equals(motEnCours.subSequence(0, 1))) {
 						keyboard.validate();
 					}
 				break;
@@ -69,8 +76,13 @@ public class KeyboardSimulator implements Observer{
 					nbValidationBlock++;
 				break;
 				case "[V](K)":
-					saisie = saisie + res;
-					motEnCours = motEnCours.substring(res.length());
+					if(res.equals(saisie+motEnCours)) {
+						motEnCours = "";
+					}else {
+						saisie = saisie + res;	
+						motEnCours = motEnCours.substring(res.length());
+					}
+					
 					nbValidationKey++;
 //					System.out.println("*** Saisie : "+saisie);
 					
@@ -98,6 +110,14 @@ public class KeyboardSimulator implements Observer{
 				break;
 			}
 		}
+	}
+	
+	public boolean containsWord(String res, String word) {
+		String[] words = res.split("/");
+		for(String w:words)
+			if(w.trim().equals(word))
+				return true;
+		return false;
 	}
 	
 	public static void main(String[] args){

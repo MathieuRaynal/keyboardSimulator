@@ -39,6 +39,7 @@ public class Keyboard extends JComponent implements Observer{
 	private CharPredictor predictor;
 	private String motEnCours;
 	private WordPredictor wordPredictor;
+	private ArrayList<String> wordList;
 	
 	public Keyboard(int activationTime){
 		super();
@@ -48,6 +49,7 @@ public class Keyboard extends JComponent implements Observer{
 		wordPrediction = false;
 		initKeyboard();
 		motEnCours = "";
+		wordList = null;
 		
 		if(localCharPrediction || charPrediction) {
 			// Prediction de caractères
@@ -135,6 +137,18 @@ public class Keyboard extends JComponent implements Observer{
 		}
 	}
 	
+	public boolean containsWord(String word){
+		System.out.println("***********************************************");
+		System.out.println("List : "+wordList);
+		System.out.println("Word : "+word);
+		if(wordList==null)
+			return false;
+		for(String w:wordList)
+			if(w.equals(word))
+				return true;
+		return false;
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		String s = (String)arg;
@@ -156,9 +170,9 @@ public class Keyboard extends JComponent implements Observer{
 				WordPredictionResult predictionResult;
 				try {
 					predictionResult = wordPredictor.predict(motEnCours);
-					List<String> wordList = new ArrayList<String>();
+					wordList = new ArrayList<String>();
 					for (WordPrediction prediction : predictionResult.getPredictions())
-						wordList.add(prediction.getPredictionToDisplay());
+						wordList.add(TextUtils.getWord(prediction.getPredictionToDisplay().toLowerCase()));
 					layout.setWord(wordList);
 					
 			    } catch (Exception e){

@@ -62,8 +62,17 @@ public class Block extends Area{
 
 	@Override
 	public void setWord(List<String> list) {
-		for(Area a:listOfChilds)
+		if(!name.equals(RACINE))
+			name = "";
+		for(Area a:listOfChilds) {
 			a.setWord(list);
+			if(!name.equals(RACINE)) {
+				if(a instanceof Block)
+					name += ((Block)a).name+"/";
+				else
+					name += ((Key)a).getString()+"/";
+			}
+		}
 	}
 	
 	public void createArea() {
