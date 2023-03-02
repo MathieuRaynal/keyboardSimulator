@@ -77,6 +77,47 @@ public class Keyboard extends JComponent implements Observer{
 		layout.activate();
 	}
 	
+	
+	
+	// deuxième constructeur de test 
+	
+	public Keyboard(String file,int activationTime){
+		super();
+		this.activationTime = activationTime;
+		localCharPrediction = false;
+		charPrediction = false;
+		wordPrediction = false;
+		initKeyboard(file);
+		motEnCours = "";
+		wordList = null;
+		
+		if(localCharPrediction || charPrediction) {
+			// Prediction de caractères
+			CharPredictorData data = new CharPredictorData();
+			try {
+				data.loadFrom(FILE_CHARS);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			predictor = new CharPredictor(data);
+		}
+		if(wordPrediction) {
+			// Prédiction de mots
+			LanguageModel languageModel = new FrenchLanguageModel();
+			PredictionParameter predictionParameter = new PredictionParameter(languageModel);
+			try {
+				WordDictionary dictionary = WordDictionary.loadDictionary(languageModel, FILE_WORDS);
+				StaticNGramTrieDictionary ngramDictionary = StaticNGramTrieDictionary.open(FILE_NGRAMS);
+			    wordPredictor = new WordPredictor(predictionParameter, dictionary, ngramDictionary);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		setPreferredSize(new Dimension(600, 500));
+		layout.activate();
+	}
+	// fin deuxième constructeur de test 
+	
 	public int getActivationTime() {
 		return activationTime;
 	}
@@ -94,9 +135,14 @@ public class Keyboard extends JComponent implements Observer{
 	}
 	
 	public void initKeyboard() {
-		loadXMLFile("resources/alpha.xml");
+		loadXMLFile("resources/idée5_1.xml");
 	}
 	
+	
+	// Méthode de test - pour le deuxième constructeur
+	public void initKeyboard(String file) {
+		loadXMLFile(file);}
+	//fin éthode de tets 
 	public void loadXMLFile(String fileName) {
 		layout = new Block(Block.RACINE, activationTime);
 		XMLReader saxReader;

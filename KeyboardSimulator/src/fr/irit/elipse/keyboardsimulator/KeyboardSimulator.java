@@ -1,5 +1,6 @@
 package fr.irit.elipse.keyboardsimulator;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -25,6 +26,19 @@ public class KeyboardSimulator implements Observer{
 		keyboard.getKeyboardLayout().addObserver(keyboard);
 		keyboard.validate();
 	}
+	// deuxième constructeur pour test
+	public KeyboardSimulator(Keyboard kb,String log){
+		corpus = new Corpus();
+		corpus.load("resources/corpus.txt");
+		logger = new Logger(log);
+		logger.debutSimulation();
+		getMot();
+		keyboard = kb;
+		keyboard.getKeyboardLayout().addObserver(this);
+		keyboard.getKeyboardLayout().addObserver(keyboard);
+		keyboard.validate();
+	}
+	// fin deuxième constructeur
 	
 	public boolean getMot() {
 		if(corpus.isEmpty())
@@ -121,9 +135,46 @@ public class KeyboardSimulator implements Observer{
 	}
 	
 	public static void main(String[] args){
+		ArrayList<String> claviers = new ArrayList<String>();
+		claviers.add("idée1");
+		
+		claviers.add("idée5_1");
+		claviers.add("idée5_2");
+		claviers.add("idée5_3");
+		
+		claviers.add("SK_0");
+		claviers.add("SK_1");
+		claviers.add("SK_2");
+		
+		
+		claviers.add("SK3_1");
+		
+		claviers.add("SK3_2");
+		claviers.add("SK3_3");
+		
+		claviers.add("SK4_0");
+		claviers.add("SK4_1");
+		claviers.add("SK4_2");
+		
+		
+		
+		
+		
+		for (int i = 0 ; i < claviers.size(); i++){
+			System.out.println(claviers.get(i)+ "§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
+			
+			
+			String clavier = "resources/"+claviers.get(i)+".xml";
+			String log = "logs/clavier"+claviers.get(i) +".csv";
+			new KeyboardSimulator(new Keyboard(clavier,DEFAULT_ACTIVATION_TIME),log);
+			JFrame f = new JFrame();
+			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			f.setVisible(true);}/*
+		
+		
 		new KeyboardSimulator(new Keyboard(DEFAULT_ACTIVATION_TIME));
 		JFrame f = new JFrame();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setVisible(true);
+		f.setVisible(true);//*/
 	}
 }
