@@ -6,8 +6,8 @@ import java.util.Observer;
 
 import javax.swing.JFrame;
 
-public class KeyboardSimulator implements Observer{
-	private static final int DEFAULT_ACTIVATION_TIME = 10;
+public class KeyboardSimulator extends Observable implements Observer{
+	public static final int DEFAULT_ACTIVATION_TIME = 100;
 	Corpus corpus;
 	Keyboard keyboard;
 	Mot mot;
@@ -17,25 +17,25 @@ public class KeyboardSimulator implements Observer{
 
 	public KeyboardSimulator(Keyboard kb){
 		corpus = new Corpus();
-		corpus.load("resources/corpus.txt");
+		corpus.load("resources/corpus_test.txt");
 		logger = new Logger("logs/test.csv");
 		logger.debutSimulation();
-		getMot();
 		keyboard = kb;
 		keyboard.getKeyboardLayout().addObserver(this);
 		keyboard.getKeyboardLayout().addObserver(keyboard);
+		getMot();
 		keyboard.validate();
 	}
 	// deuxième constructeur pour test
 	public KeyboardSimulator(Keyboard kb,String log){
 		corpus = new Corpus();
-		corpus.load("resources/corpus.txt");
+		corpus.load("resources/corpus_test.txt");
 		logger = new Logger(log);
 		logger.debutSimulation();
-		getMot();
 		keyboard = kb;
 		keyboard.getKeyboardLayout().addObserver(this);
 		keyboard.getKeyboardLayout().addObserver(keyboard);
+		getMot();
 		keyboard.validate();
 	}
 	// fin deuxième constructeur
@@ -106,6 +106,8 @@ public class KeyboardSimulator implements Observer{
 						if(corpus.isEmpty()){
 							System.out.println("Saisie terminee");
 							logger.finSimulation();
+							setChanged(); 
+							notifyObservers(); 
 						}else{
 							getMot();
 							keyboard.initLayout();
