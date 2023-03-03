@@ -7,7 +7,7 @@ import java.util.Observer;
 import javax.swing.JFrame;
 
 public class KeyboardSimulator extends Observable implements Observer{
-	public static final int DEFAULT_ACTIVATION_TIME = 100;
+	public static final int DEFAULT_ACTIVATION_TIME = 80;
 	Corpus corpus;
 	Keyboard keyboard;
 	Mot mot;
@@ -17,7 +17,7 @@ public class KeyboardSimulator extends Observable implements Observer{
 
 	public KeyboardSimulator(Keyboard kb){
 		corpus = new Corpus();
-		corpus.load("resources/corpus_test.txt");
+		corpus.load("resources/corpus.txt");
 		logger = new Logger("logs/test.csv");
 		logger.debutSimulation();
 		keyboard = kb;
@@ -29,7 +29,7 @@ public class KeyboardSimulator extends Observable implements Observer{
 	// deuxième constructeur pour test
 	public KeyboardSimulator(Keyboard kb,String log){
 		corpus = new Corpus();
-		corpus.load("resources/corpus_test.txt");
+		corpus.load("resources/corpus.txt");
 		logger = new Logger(log);
 		logger.debutSimulation();
 		keyboard = kb;
@@ -78,7 +78,7 @@ public class KeyboardSimulator extends Observable implements Observer{
 				break;
 				case "[A](K)":
 					nbActivationKey++;
-					System.out.println("Activation : "+res+" / "+saisie+" / "+motEnCours);
+//					System.out.println("Activation : "+res+" / "+saisie+" / "+motEnCours);
 					if(keyboard.containsWord(saisie+motEnCours)) {
 						if(res.equals(saisie+motEnCours))
 							keyboard.validate();

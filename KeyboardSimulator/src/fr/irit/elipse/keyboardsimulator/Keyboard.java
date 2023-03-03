@@ -3,6 +3,8 @@ package fr.irit.elipse.keyboardsimulator;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -14,6 +16,7 @@ import java.util.Observer;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 import org.lifecompanion.model.impl.textprediction.charprediction.CharPredictor;
 import org.lifecompanion.model.impl.textprediction.charprediction.CharPredictorData;
@@ -40,6 +43,7 @@ public class Keyboard extends JComponent implements Observer{
 	private String motEnCours;
 	private WordPredictor wordPredictor;
 	private ArrayList<String> wordList;
+	public Timer starter;
 	
 	public Keyboard(int activationTime){
 		super();
@@ -74,7 +78,14 @@ public class Keyboard extends JComponent implements Observer{
 			}
 		}
 		setPreferredSize(new Dimension(600, 500));
-		layout.activate();
+		starter = new Timer(5000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				layout.activate();
+				starter.stop();
+			}
+		});
+		starter.start();
 	}
 	
 	
@@ -184,9 +195,9 @@ public class Keyboard extends JComponent implements Observer{
 	}
 	
 	public boolean containsWord(String word){
-		System.out.println("***********************************************");
-		System.out.println("List : "+wordList);
-		System.out.println("Word : "+word);
+//		System.out.println("***********************************************");
+//		System.out.println("List : "+wordList);
+//		System.out.println("Word : "+word);
 		if(wordList==null)
 			return false;
 		for(String w:wordList)
