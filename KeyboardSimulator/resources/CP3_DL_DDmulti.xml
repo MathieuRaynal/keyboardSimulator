@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="keyboard.xsd" localCharPrediction="true" charPrediction="false" wordPrediction="true">
     
-<Block>
-	<Key indexWordPred="0"	 string=""	x="370"	y="10" 	width="150" 	height="50"/>
-	<Key indexWordPred="1"	 string="" 	x="370" y="70" 	width="150" 	height="50"/>
-	<Key indexWordPred="2"	 string="" 	x="370" y="130"	width="150" 	height="50"/>
-	<Key indexWordPred="3"	 string="" 	x="370"	y="190"	width="150" 	height="50"/>
-    <Key indexWordPred="4"	 string="" 	x="370" y="250"	width="150" 	height="50"/>
-</Block>
-
-
+	<Block>
+		<Key indexWordPred="0"	 string=""	x="370"	y="10" 	width="150" 	height="50"/>
+		<Key indexWordPred="1"	 string="" 	x="370" y="70" 	width="150" 	height="50"/>
+		<Key indexWordPred="2"	 string="" 	x="370" y="130"	width="150" 	height="50"/>
+		<Key indexWordPred="3"	 string="" 	x="370"	y="190"	width="150" 	height="50"/>
+    	<Key indexWordPred="4"	 string="" 	x="370" y="250"	width="150" 	height="50"/>
+	</Block>
+	
 	<Block>
 		<Key indexLocalCharPred="0"	 string="A"		x="10" 	y="10" 	width="50" 	height="50"/>
 		<Key indexLocalCharPred="1"	 string="B" 	x="70" 	y="10" 	width="50" 	height="50"/>

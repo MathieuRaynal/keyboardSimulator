@@ -146,7 +146,9 @@ public class Keyboard extends JComponent implements Observer{
 	}
 	
 	public void initKeyboard() {
+
 		loadXMLFile("resources/CP3_DL_DDmulti.xml");
+		
 	}
 	
 	
