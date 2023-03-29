@@ -55,7 +55,8 @@ public class Simulator implements Observer{
 		
 		
 		
-		claviers.add("PDG_L_N");
+		//claviers.add("PDG_L_N");// ici c'est ADG_L_N en vérité. 
+		claviers.add("PDG_L_N(vrai)");
 	}
 	
 	public void startNextKeyboard() {
