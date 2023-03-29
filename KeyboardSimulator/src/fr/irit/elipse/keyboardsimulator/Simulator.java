@@ -40,8 +40,8 @@ public class Simulator implements Observer{
 		//claviers.add("CP3_DL_d1");
 		//claviers.add("CP3_DL_dmulti");
 		
-		claviers.add("PS_RC_C1");
-		claviers.add("PS_RC_Cmulti");
+		//claviers.add("PS_RC_C1");
+		//claviers.add("PS_RC_Cmulti");
 		
 		//claviers.add("CL2_DL_N");
 		//claviers.add("CL2_DL_dmulti");
@@ -55,7 +55,7 @@ public class Simulator implements Observer{
 		
 		
 		
-		
+		claviers.add("PDG_L_N");
 	}
 	
 	public void startNextKeyboard() {
