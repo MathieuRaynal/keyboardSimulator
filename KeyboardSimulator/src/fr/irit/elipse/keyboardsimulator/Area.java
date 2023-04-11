@@ -9,7 +9,6 @@ import javax.swing.Timer;
 
 @SuppressWarnings("deprecation")
 public abstract class Area extends Observable implements ActionListener{
-	Toto
 	protected Rectangle2D.Double area;
 	private int activationTime;
 	private Block parent;
