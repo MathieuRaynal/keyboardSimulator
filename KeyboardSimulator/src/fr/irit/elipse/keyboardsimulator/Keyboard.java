@@ -146,7 +146,8 @@ public class Keyboard extends JComponent implements Observer{
 	}
 	
 	public void initKeyboard() {
-		loadXMLFile("resources/idée5_1.xml");
+		loadXMLFile("resources/CL4_DL_N.xml");
+
 	}
 	
 	
