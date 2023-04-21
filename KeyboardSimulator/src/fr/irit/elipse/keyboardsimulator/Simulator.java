@@ -55,15 +55,30 @@ public class Simulator implements Observer{
 		
 		
 		
-		//claviers.add("PDG_L_N");// ici c'est ADG_L_N en vérité. 
-		claviers.add("PDG_L_N(vrai)");
+		//claviers.add("ADG_L_N");
+		//claviers.add("");
+		//claviers.add("1a_SMK");
+		//claviers.add("1b_SMK");
+		//claviers.add("1c_SMK");
+		//claviers.add("CL4_DL_N");
+		//claviers.add("1a_SMK_DL");
+		//claviers.add("1b_SMK_DL");
+		//claviers.add("1c_SMK_DL");
+		
+		//claviers.add("1a_SMK_espace");
+		//claviers.add("1b_SMK_espace");
+		
+		claviers.add("1a_SMK_anglais");
+		claviers.add("1b_SMK_anglais");
+		claviers.add("1c_SMK_anglais");
+		
 	}
 	
 	public void startNextKeyboard() {
 		if(claviers.size()>0) {
 			String name = claviers.remove(0);
 			String clavier = "resources/"+name+".xml";
-			String log = "logs/clavier"+name+".csv";
+			String log = "logs/clavierbrown"+name+".csv";
 			KeyboardSimulator ks = new KeyboardSimulator(new Keyboard(clavier,KeyboardSimulator.DEFAULT_ACTIVATION_TIME),log);
 			ks.addObserver(this);
 			System.out.println("--------------------------------------------------------------------------");
