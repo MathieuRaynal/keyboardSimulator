@@ -17,7 +17,7 @@ public class KeyboardSimulator extends Observable implements Observer{
 
 	public KeyboardSimulator(Keyboard kb){
 		corpus = new Corpus();
-		corpus.load("resources/bc-wordfreq.txt");
+		corpus.load("resources/corpus_2000_Cherifa.txt");
 		logger = new Logger("logs/test.csv");
 		logger.debutSimulation();
 		keyboard = kb;
@@ -29,7 +29,7 @@ public class KeyboardSimulator extends Observable implements Observer{
 	// deuxième constructeur pour test
 	public KeyboardSimulator(Keyboard kb,String log){
 		corpus = new Corpus();
-		corpus.load("resources/bc-wordfreq.txt");
+		corpus.load("resources/corpus_2000_Cherifa.txt");
 		logger = new Logger(log);
 		logger.debutSimulation();
 		keyboard = kb;
