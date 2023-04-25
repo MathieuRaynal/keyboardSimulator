@@ -68,7 +68,7 @@ public class Simulator implements Observer{
 		//claviers.add("1a_SMK_espace");
 		//claviers.add("1b_SMK_espace");
 		
-		claviers.add("1a_SMK_anglais");
+		//claviers.add("1a_SMK_anglais");
 		claviers.add("1b_SMK_anglais");
 		claviers.add("1c_SMK_anglais");
 		
@@ -78,7 +78,7 @@ public class Simulator implements Observer{
 		if(claviers.size()>0) {
 			String name = claviers.remove(0);
 			String clavier = "resources/"+name+".xml";
-			String log = "logs/clavierbrown"+name+".csv";
+			String log = "logs/clavier_bnc1_"+name+".csv";
 			KeyboardSimulator ks = new KeyboardSimulator(new Keyboard(clavier,KeyboardSimulator.DEFAULT_ACTIVATION_TIME),log);
 			ks.addObserver(this);
 			System.out.println("--------------------------------------------------------------------------");
