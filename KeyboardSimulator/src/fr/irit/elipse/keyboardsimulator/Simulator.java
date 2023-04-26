@@ -12,15 +12,16 @@ public class Simulator implements Observer{
 		claviers = new ArrayList<String>();
 		
 		
-		claviers.add("CL4_DL_N");//idée gardée
-		claviers.add("PS_RC_clavier");//idée gardée
+		//claviers.add("CL4_DL_N");//idée gardée
+		
 		claviers.add("PDG_L_N");//idée gardée
 		claviers.add("ADG_L_N");//idée gardée
-		
 		claviers.add("AS_RC_N");
+		claviers.add("PDG_RC_N");
+		claviers.add("PS_RC_clavier");//idée gardée
 		claviers.add("PS_RC_C1");
 		claviers.add("PS_RC_Cmulti");
-		claviers.add("PDG_RC_N");
+		
 		
 		
 		//claviers.add("idée1");
