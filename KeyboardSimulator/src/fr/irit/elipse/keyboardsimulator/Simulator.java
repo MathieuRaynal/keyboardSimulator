@@ -10,6 +10,19 @@ public class Simulator implements Observer{
 	
 	public Simulator() {
 		claviers = new ArrayList<String>();
+		
+		
+		claviers.add("CL4_DL_N");//idée gardée
+		claviers.add("PS_RC_clavier");//idée gardée
+		claviers.add("PDG_L_N");//idée gardée
+		claviers.add("ADG_L_N");//idée gardée
+		
+		claviers.add("AS_RC_N");
+		claviers.add("PS_RC_C1");
+		claviers.add("PS_RC_Cmulti");
+		claviers.add("PDG_RC_N");
+		
+		
 		//claviers.add("idée1");
 		
 		//claviers.add("idée5_1");
@@ -20,7 +33,6 @@ public class Simulator implements Observer{
 		//claviers.add("SK_1");
 		//claviers.add("SK_2");
 		
-		
 		//claviers.add("SK3_1");
 		
 		//claviers.add("SK3_2");
@@ -30,18 +42,14 @@ public class Simulator implements Observer{
 		//claviers.add("SK4_1");
 		//claviers.add("SK4_2");
 		
-		//claviers.add("CL3_S_N");
+		claviers.add("CL3_S_N");
 		
-
-		// nouveau
-		//claviers.add("CL3_DL_d1");
-		//claviers.add("CL3_DL_dmulti");
+		claviers.add("CL3_DL_d1");
+		claviers.add("CL3_DL_dmulti");
 		
-		//claviers.add("CP3_DL_d1");
-		//claviers.add("CP3_DL_dmulti");
+		claviers.add("CP3_DL_d1");
+		claviers.add("CP3_DL_dmulti");
 		
-		//claviers.add("PS_RC_C1");
-		//claviers.add("PS_RC_Cmulti");
 		
 		//claviers.add("CL2_DL_N");
 		//claviers.add("CL2_DL_dmulti");
@@ -55,14 +63,11 @@ public class Simulator implements Observer{
 		
 		
 		
-		claviers.add("ADG_L_N");//idée gardée
 		//claviers.add("");
 		//claviers.add("1a_SMK");
 		//claviers.add("1b_SMK");
 		//claviers.add("1c_SMK");
-		claviers.add("CL4_DL_N");//idée gardée
-		claviers.add("PS_RC_clavier");//idée gardée
-		claviers.add("PDG_L_N");//idée gardée
+		
 		//claviers.add("1a_SMK_DL");
 		//claviers.add("1b_SMK_DL");
 		//claviers.add("1c_SMK_DL");
