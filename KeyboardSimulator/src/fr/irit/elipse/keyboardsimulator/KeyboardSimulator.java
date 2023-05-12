@@ -1,5 +1,7 @@
 package fr.irit.elipse.keyboardsimulator;
 
+import fr.irit.elipse.keyboardsimulator.logging.LoggerCSV;
+
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -13,12 +15,12 @@ public class KeyboardSimulator extends Observable implements Observer{
 	Mot mot;
 	String motEnCours, saisie;
 	int nbActivationBlock, nbValidationBlock, nbActivationKey, nbValidationKey;
-	Logger logger;
+	LoggerCSV logger;
 
 	public KeyboardSimulator(Keyboard kb){
 		corpus = new Corpus();
 		corpus.load("resources/corpus_2000_Cherifa.txt");
-		logger = new Logger("logs/test.csv");
+		logger = new LoggerCSV("logs/test.csv");
 		logger.debutSimulation();
 		keyboard = kb;
 		keyboard.getKeyboardLayout().addObserver(this);
@@ -30,7 +32,7 @@ public class KeyboardSimulator extends Observable implements Observer{
 	public KeyboardSimulator(Keyboard kb,String log){
 		corpus = new Corpus();
 		corpus.load("resources/corpus_2000_Cherifa.txt");
-		logger = new Logger(log);
+		logger = new LoggerCSV(log);
 		logger.debutSimulation();
 		keyboard = kb;
 		keyboard.getKeyboardLayout().addObserver(this);

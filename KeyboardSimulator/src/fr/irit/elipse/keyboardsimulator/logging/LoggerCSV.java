@@ -1,13 +1,15 @@
-package fr.irit.elipse.keyboardsimulator;
+package fr.irit.elipse.keyboardsimulator.logging;
+
+import fr.irit.elipse.keyboardsimulator.Mot;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class Logger{
+public class LoggerCSV {
 	BufferedWriter txtFile;
 	Mot motEnCours;
 	
-	public Logger(String fileName) {
+	public LoggerCSV(String fileName) {
 		try {
 			txtFile = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName),StandardCharsets.UTF_8));
 		} catch (FileNotFoundException e) {

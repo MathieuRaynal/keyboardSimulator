@@ -111,7 +111,7 @@ public class Block extends Area{
 	
 	@Override
 	public void init() {
-		currentChild = -1;		
+		currentChild = 0;//-1;
 		for(Area a : listOfChilds)
 			a.init();
 	}
@@ -158,7 +158,7 @@ public class Block extends Area{
 			}
 			g2.draw(area);
 		}
-		for(Area a:listOfChilds)
+		for(Area a: listOfChilds)
 			a.paint(g2);
 	}
 
