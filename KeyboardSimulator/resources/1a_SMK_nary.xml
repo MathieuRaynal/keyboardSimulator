@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="keyboard.xsd" localCharPrediction="false" charPrediction="false" wordPrediction="false">
+	<Block>	
+		<Block>	
+		<Key indexLocalCharPred="0"	 string="A"	x="10" 	y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="1"	 string="B" x="60" 	y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="2"	 string="C" x="110" y="10" width="40" height="40"/>
+		</Block>	
+		<Block>	
+		<Key indexLocalCharPred="3"	 string="D"	x="190" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="4"	 string="E" x="240" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="5"	 string="F" x="290" y="10" width="40" height="40"/>
+		</Block>
+		<Block>	
+		<Key indexLocalCharPred="6"	 string="G"	x="370" y="10" width="40" height="40"/>
+
+		<Key indexLocalCharPred="7" string="H"	x="420" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="8"	 string="I" x="470" y="10" width="40" height="40"/>
+		</Block>
+	</Block>
+
+<Block>	
+	<Block>	
+		<Key indexLocalCharPred="0"	 string="J" x="550" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="1"	 string="K"	x="600" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="2" string="L" x="650" y="10" width="40" height="40"/>
+		</Block>
+		<Block>	
+		<Key indexLocalCharPred="3" string="M" x="730" y="10" width="40" height="40"/>
+
+		<Key indexLocalCharPred="4" string="N"	x="780" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="5" string="O" x="830" 	y="10" width="40" height="40"/>
+		</Block>
+		<Block>	
+		<Key indexLocalCharPred="6" string="P" x="910" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="7" string="Q"	x="960" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="8" string="R" x="1010" y="10" width="40" height="40"/>
+		</Block>
+</Block>
+
+<Block>	
+		<Block>	
+		<Key indexLocalCharPred="0" string="S"	x="1090" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="1" string="T" x="1140" 	y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="2" string="U" x="1190" y="10" width="40" height="40"/>
+		</Block>
+		<Block>	
+		<Key indexLocalCharPred="3" string="V"	x="1270" y="10" width="40" height="40"/>
+
+		<Key indexLocalCharPred="4" string="W" x="1320" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="5" string="X" x="1370" y="10" width="40" height="40"/>
+		</Block>
+		<Block>	
+		<Key indexLocalCharPred="6" string="Y" x="1450" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="7" string="Z" x="1500" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="8" string=" " x="1550" y="10" width="40" height="40"/>
+		</Block>
+</Block>
+</Keyboard>
