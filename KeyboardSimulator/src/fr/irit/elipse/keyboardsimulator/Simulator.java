@@ -11,25 +11,9 @@ public class Simulator implements Observer{
 	
 	public Simulator() {
 		claviers = new ArrayList<String>();
-		claviers.add("idée1");
-		
-		claviers.add("idée5_1");
-		claviers.add("idée5_2");
-		claviers.add("idée5_3");
-		
-		claviers.add("SK_0");
-		claviers.add("SK_1");
-		claviers.add("SK_2");
+		claviers.add("PS_RC_clavier");
 		
 		
-		claviers.add("SK3_1");
-		
-		claviers.add("SK3_2");
-		claviers.add("SK3_3");
-		
-		claviers.add("SK4_0");
-		claviers.add("SK4_1");
-		claviers.add("SK4_2");
 	}
 	
 	public void startNextKeyboard() {
