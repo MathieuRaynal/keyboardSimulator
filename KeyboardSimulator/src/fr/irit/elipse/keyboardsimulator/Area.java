@@ -9,13 +9,11 @@ import javax.swing.Timer;
 
 @SuppressWarnings("deprecation")
 public abstract class Area extends Observable implements ActionListener{
-	Toto
 	protected Rectangle2D.Double area;
 	private int activationTime;
 	private Block parent;
 	private boolean isSelected, isActive, isValidated;
 	protected Timer activeTimer;
-	Test t;
 	
 	public Area(int activationTime){
 		this.activationTime = activationTime;
@@ -32,6 +30,7 @@ public abstract class Area extends Observable implements ActionListener{
 	public abstract void setLocalChar(List<Character> list);
 	public abstract void setChar(List<Character> list);
 	public abstract void setWord(List<String> list);
+	public abstract void initLayout();
 	
 	public Rectangle2D.Double getArea(){return area;}
 	

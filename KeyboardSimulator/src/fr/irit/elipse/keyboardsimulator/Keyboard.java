@@ -3,7 +3,7 @@ package fr.irit.elipse.keyboardsimulator;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.event.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -12,8 +12,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 import org.lifecompanion.model.impl.textprediction.charprediction.CharPredictor;
 import org.lifecompanion.model.impl.textprediction.charprediction.CharPredictorData;
@@ -41,13 +40,13 @@ public class Keyboard extends JComponent implements Observer{
 	private WordPredictor wordPredictor;
 	private ArrayList<String> wordList;
 	
-	public Keyboard(int activationTime){
+	public Keyboard(String clavier, int activationTime){
 		super();
 		this.activationTime = activationTime;
 		localCharPrediction = false;
 		charPrediction = false;
 		wordPrediction = false;
-		initKeyboard();
+		initKeyboard(clavier);
 		motEnCours = "";
 		wordList = null;
 		
@@ -93,8 +92,8 @@ public class Keyboard extends JComponent implements Observer{
 		this.wordPrediction = wordPrediction;
 	}
 	
-	public void initKeyboard() {
-		loadXMLFile("resources/alpha.xml");
+	public void initKeyboard(String clavier) {
+		loadXMLFile(clavier);
 	}
 	
 	public void loadXMLFile(String fileName) {
@@ -138,9 +137,6 @@ public class Keyboard extends JComponent implements Observer{
 	}
 	
 	public boolean containsWord(String word){
-		System.out.println("***********************************************");
-		System.out.println("List : "+wordList);
-		System.out.println("Word : "+word);
 		if(wordList==null)
 			return false;
 		for(String w:wordList)
@@ -153,20 +149,30 @@ public class Keyboard extends JComponent implements Observer{
 	public void update(Observable o, Object arg) {
 		String s = (String)arg;
 		if(s.startsWith("[V](K)")){
-			if(s.substring(6).equals(" "))
+			if(s.substring(6).equals(" ")) {
 				motEnCours = "";
-			else
-				motEnCours += s.substring(6);
+				layout.initLayout();
+			}
+			else{
+				String ajout = s.substring(6);
+				if(ajout.length()>1) {
+					motEnCours = "";
+					layout.initLayout();
+				}else{
+					motEnCours += s.substring(6);
+					
+					if(localCharPrediction) {
+						List<Character> listChar = TextUtils.getCharList(predictor.predict(motEnCours, 100));
+						layout.setLocalChar(listChar);
+					}
+					if(charPrediction) {
+						List<Character> listChar = TextUtils.getCharList(predictor.predict(motEnCours, 100));
+						layout.setChar(listChar);
+					}
+				}
+			}
 
-			if(localCharPrediction) {
-				List<Character> listChar = TextUtils.getCharList(predictor.predict(motEnCours, 100));
-				layout.setLocalChar(listChar);
-			}
-			if(charPrediction) {
-				List<Character> listChar = TextUtils.getCharList(predictor.predict(motEnCours, 100));
-				layout.setChar(listChar);
-			}
-			if(!motEnCours.equals("") && wordPrediction) {
+			if(wordPrediction) {
 				WordPredictionResult predictionResult;
 				try {
 					predictionResult = wordPredictor.predict(motEnCours);

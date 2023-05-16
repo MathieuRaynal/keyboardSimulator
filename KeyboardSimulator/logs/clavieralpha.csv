@@ -1,0 +1,6 @@
+word;Nb_char (C_w);Freq (F_w);Nb_scan_block (S_w_b);Nb_scan_key (S_w_k);Nb_scan (S_w);Nb_act_block;Nb_act_key;Nb_act;S_w_b x F_w;S_w_k x F_w;S_w x F_w;C_w x F_w
+bonjour;7;142;7;5;12;2;2;4;994;710;1704;994
+bonsoir;7;150;10;9;19;3;3;6;1500;1350;2850;1050
+banane;6;54;12;9;21;5;5;10;648;486;1134;324
+tout;4;32;10;4;14;2;2;4;320;128;448;128
+le;2;1548;6;1;7;1;1;2;9288;1548;10836;3096

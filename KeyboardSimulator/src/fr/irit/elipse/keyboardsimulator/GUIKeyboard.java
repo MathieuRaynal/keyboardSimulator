@@ -50,6 +50,8 @@ public class GUIKeyboard extends JFrame implements KeyListener, Observer{
 	}
 	
 	public static void main(String[] args) {
-		new GUIKeyboard(new Keyboard(DEFAULT_ACTIVATION_TIME));
+		String name = "alpha";
+		String clavier = "resources/"+name+".xml";
+		new GUIKeyboard(new Keyboard(clavier,DEFAULT_ACTIVATION_TIME));
 	}
 }

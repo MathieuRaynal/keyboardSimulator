@@ -51,6 +51,8 @@ public class CharPredictor {
         this.predictorData = predictorData;
         this.firstCharacter = predictorData.getPredictionFor(' ').stream().map(cp -> cp.getNextChars()[0]).distinct()
                 .limit(FREQUENT_CHAR_SIZE).collect(Collectors.toList());
+        firstCharacter.add(new Character('x'));
+        System.out.println("Constructor : "+firstCharacter);
     }
 
     // Class part : "Public API"

@@ -5,8 +5,8 @@ import java.util.Observer;
 
 import javax.swing.JFrame;
 
-public class KeyboardSimulator implements Observer{
-	private static final int DEFAULT_ACTIVATION_TIME = 10;
+public class KeyboardSimulator extends Observable implements Observer{
+	public static final int DEFAULT_ACTIVATION_TIME = 20;
 	Corpus corpus;
 	Keyboard keyboard;
 	Mot mot;
@@ -19,10 +19,34 @@ public class KeyboardSimulator implements Observer{
 		corpus.load("resources/corpus.txt");
 		logger = new Logger("logs/test.csv");
 		logger.debutSimulation();
-		getMot();
 		keyboard = kb;
 		keyboard.getKeyboardLayout().addObserver(this);
 		keyboard.getKeyboardLayout().addObserver(keyboard);
+		getMot();
+		keyboard.validate();
+	}
+	
+	public KeyboardSimulator(Keyboard kb,String logFile){
+		corpus = new Corpus();
+		corpus.load("resources/corpus.txt");
+		logger = new Logger(logFile);
+		logger.debutSimulation();
+		keyboard = kb;
+		keyboard.getKeyboardLayout().addObserver(this);
+		keyboard.getKeyboardLayout().addObserver(keyboard);
+		getMot();
+		keyboard.validate();
+	}
+	
+	public KeyboardSimulator(Keyboard kb, String corpusFile, String logFile){
+		corpus = new Corpus();
+		corpus.load(corpusFile);
+		logger = new Logger(logFile);
+		logger.debutSimulation();
+		keyboard = kb;
+		keyboard.getKeyboardLayout().addObserver(this);
+		keyboard.getKeyboardLayout().addObserver(keyboard);
+		getMot();
 		keyboard.validate();
 	}
 	
@@ -34,7 +58,6 @@ public class KeyboardSimulator implements Observer{
 		motEnCours = mot.getMot();
 		saisie = "";
 		initNb();
-		System.out.println("---------------- Mot à saisir : "+motEnCours);
 		return true;
 	}
 	
@@ -64,7 +87,6 @@ public class KeyboardSimulator implements Observer{
 				break;
 				case "[A](K)":
 					nbActivationKey++;
-					System.out.println("Activation : "+res+" / "+saisie+" / "+motEnCours);
 					if(keyboard.containsWord(saisie+motEnCours)) {
 						if(res.equals(saisie+motEnCours))
 							keyboard.validate();
@@ -77,6 +99,7 @@ public class KeyboardSimulator implements Observer{
 				break;
 				case "[V](K)":
 					if(res.equals(saisie+motEnCours)) {
+						saisie += motEnCours; 
 						motEnCours = "";
 					}else {
 						saisie = saisie + res;	
@@ -87,11 +110,13 @@ public class KeyboardSimulator implements Observer{
 //					System.out.println("*** Saisie : "+saisie);
 					
 					if(motEnCours.length()==0){
-						System.out.println("Mot termine");
-						logger.finDeMot(nbActivationBlock+nbActivationKey,nbValidationBlock+nbValidationKey);
+						System.out.println("Mot termine : "+saisie);
+						logger.finDeMot(nbActivationBlock, nbValidationBlock, nbActivationKey, nbValidationKey);
 						if(corpus.isEmpty()){
 							System.out.println("Saisie terminee");
 							logger.finSimulation();
+							setChanged();
+							notifyObservers();
 						}else{
 							getMot();
 							keyboard.initLayout();
@@ -121,7 +146,10 @@ public class KeyboardSimulator implements Observer{
 	}
 	
 	public static void main(String[] args){
-		new KeyboardSimulator(new Keyboard(DEFAULT_ACTIVATION_TIME));
+		String name = "alpha";
+		String clavier = "resources/"+name+".xml";
+		String log = "logs/clavier"+name+".csv";
+		new KeyboardSimulator(new Keyboard(clavier,DEFAULT_ACTIVATION_TIME),log);
 		JFrame f = new JFrame();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);

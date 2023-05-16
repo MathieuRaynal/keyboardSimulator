@@ -74,6 +74,21 @@ public class Block extends Area{
 			}
 		}
 	}
+
+	@Override
+	public void initLayout(){
+		if(!name.equals(RACINE))
+			name = "";
+		for(Area a:listOfChilds){
+			a.initLayout();
+			if(!name.equals(RACINE)) {
+				if(a instanceof Block)
+					name += ((Block)a).name;
+				else
+					name += ((Key)a).getString();
+			}
+		}
+	}
 	
 	public void createArea() {
 		if(listOfChilds.size()>0) {
@@ -105,7 +120,6 @@ public class Block extends Area{
 					maxH = a.area.getY()+a.area.getHeight();
 			}
 			area = new Rectangle2D.Double(minX-2, minY-2, maxW-minX+4, maxH-minY+4);
-//			System.out.println(area);
 		}
 	}
 	

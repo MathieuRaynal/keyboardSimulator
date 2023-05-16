@@ -17,7 +17,7 @@ public class Logger{
 	
 	public void debutSimulation(){
 		try {
-			txtFile.write("word;Nb_char (C_w);Freq (F_w);Nb_scan (S_w);Nb_act;S_w x F_w;C_w x F_w");
+			txtFile.write("word;Nb_char (C_w);Freq (F_w);Nb_scan_block (S_w_b);Nb_scan_key (S_w_k);Nb_scan (S_w);Nb_act_block;Nb_act_key;Nb_act;S_w_b x F_w;S_w_k x F_w;S_w x F_w;C_w x F_w");
 			txtFile.newLine();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -46,12 +46,26 @@ public class Logger{
 		}
 	}
 
-	public void finDeMot(int nbScan, int nbAct) {
+	public void finDeMot(int nbScanBlock, int nbActBlock, int nbScanKey, int nbActKey) {
 		try {
+			int nbScan = nbScanBlock+nbScanKey;
+			int nbAct = nbActBlock + nbActKey;
+			txtFile.write(";");
+			txtFile.write(String.valueOf(nbScanBlock));
+			txtFile.write(";");
+			txtFile.write(String.valueOf(nbScanKey));
 			txtFile.write(";");
 			txtFile.write(String.valueOf(nbScan));
 			txtFile.write(";");
+			txtFile.write(String.valueOf(nbActBlock));
+			txtFile.write(";");
+			txtFile.write(String.valueOf(nbActKey));
+			txtFile.write(";");
 			txtFile.write(String.valueOf(nbAct));
+			txtFile.write(";");
+			txtFile.write(String.valueOf(nbScanBlock*motEnCours.getFreq()));
+			txtFile.write(";");
+			txtFile.write(String.valueOf(nbScanKey*motEnCours.getFreq()));
 			txtFile.write(";");
 			txtFile.write(String.valueOf(nbScan*motEnCours.getFreq()));
 			txtFile.write(";");

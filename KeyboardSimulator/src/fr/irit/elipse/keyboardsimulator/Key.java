@@ -10,11 +10,12 @@ import java.util.Observable;
 
 @SuppressWarnings("deprecation")
 public class Key extends Area{
-	private String string;
+	private String initialString, string;
 	private int indexLocalCharPred, indexCharPred, indexWordPred;
 	
 	public Key(int activationTime, String s, double x, double y, double w, double h){
 		super(activationTime);
+		this.initialString = s;
 		this.string = s;
 		indexCharPred = -1;
 		indexWordPred = -1;
@@ -24,6 +25,7 @@ public class Key extends Area{
 	
 	public Key(int activationTime, String s, int indexLocalCharPred, int indexCharPred, int indexWordPred, double x, double y, double w, double h){
 		super(activationTime);
+		this.initialString = s;
 		this.string = s;
 		this.indexLocalCharPred = indexLocalCharPred;
 		this.indexCharPred = indexCharPred;
@@ -60,6 +62,10 @@ public class Key extends Area{
 		}
 	}
 	
+	public void initLayout() {
+		string = initialString;
+	}
+	
 	public String getString(){return string;}
 
 	@Override
@@ -92,6 +98,7 @@ public class Key extends Area{
 			g2.setStroke(new BasicStroke(1.0f));
 		}
 		g2.draw(area);
-		UtilsPainting.paintText(g2, f, area, string, HAlign.CENTER, VAlign.CENTER);
+		if(string!=null)
+			UtilsPainting.paintText(g2, f, area, string, HAlign.CENTER, VAlign.CENTER);
 	}
 }
