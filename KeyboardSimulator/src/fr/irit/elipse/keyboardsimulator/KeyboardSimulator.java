@@ -28,7 +28,7 @@ public class KeyboardSimulator extends Observable implements Observer{
 	
 	public KeyboardSimulator(Keyboard kb,String logFile){
 		corpus = new Corpus();
-		corpus.load("resources/corpus.txt");
+		corpus.load("resources/corpus_2000_Cherifa.txt");
 		logger = new Logger(logFile);
 		logger.debutSimulation();
 		keyboard = kb;

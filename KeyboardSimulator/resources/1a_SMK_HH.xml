@@ -2,52 +2,52 @@
 <Keyboard xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="keyboard.xsd" localCharPrediction="false" charPrediction="false" wordPrediction="false">
 <Block>
 	<Block>
-		<Key indexLocalCharPred="0"	 string="A"	x="10" 	y="10" width="40" height="40"/>
-		<Key indexLocalCharPred="1"	 string="B" x="60" 	y="10" width="40" height="40"/>
-		<Key indexLocalCharPred="2"	 string="C" x="110" y="10" width="40" height="40"/>
-		<Key indexLocalCharPred="3"	 string="D"	x="160" y="10" width="40" height="40"/>
-		<Key indexLocalCharPred="4"	 string="E" x="210" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="0"	 string=" "	x="10" 	y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="1"	 string="A" x="60" 	y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="2"	 string="B" x="110" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="3"	 string="C"	x="160" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="4"	 string="D" x="210" y="10" width="40" height="40"/>
 	</Block>
 	<Block>
-		<Key indexLocalCharPred="0"	 string="J" x="10" y="70" width="40" height="40"/>
-		<Key indexLocalCharPred="1"	 string="K"	x="60" y="70" width="40" height="40"/>
-		<Key indexLocalCharPred="2" string="L" x="110" y="70" width="40" height="40"/>
-		<Key indexLocalCharPred="3" string="M" x="160" y="70" width="40" height="40"/>
+		<Key indexLocalCharPred="0"	 string="I" x="10" y="70" width="40" height="40"/>
+		<Key indexLocalCharPred="1"	 string="J"	x="60" y="70" width="40" height="40"/>
+		<Key indexLocalCharPred="2" string="K" x="110" y="70" width="40" height="40"/>
+		<Key indexLocalCharPred="3" string="L" x="160" y="70" width="40" height="40"/>
 
-		<Key indexLocalCharPred="4" string="N"	x="210" y="70" width="40" height="40"/>
+		<Key indexLocalCharPred="4" string="M"	x="210" y="70" width="40" height="40"/>
 	</Block>
 	<Block>
-		<Key indexLocalCharPred="0" string="S"	x="10" 	y="130" width="40" height="40"/>
-		<Key indexLocalCharPred="1" string="T" x="60" 	y="130" width="40" height="40"/>
-		<Key indexLocalCharPred="2" string="U" x="110" y="130" width="40" height="40"/>
-		<Key indexLocalCharPred="3" string="V"	x="160" y="130" width="40" height="40"/>
+		<Key indexLocalCharPred="0" string="R"	x="10" 	y="130" width="40" height="40"/>
+		<Key indexLocalCharPred="1" string="S" x="60" 	y="130" width="40" height="40"/>
+		<Key indexLocalCharPred="2" string="T" x="110" y="130" width="40" height="40"/>
+		<Key indexLocalCharPred="3" string="U"	x="160" y="130" width="40" height="40"/>
 
-		<Key indexLocalCharPred="4" string="W" x="210" y="130" width="40" height="40"/>
+		<Key indexLocalCharPred="4" string="V" x="210" y="130" width="40" height="40"/>
 	</Block>
 </Block>
 
 <Block>
 	<Block>
-		<Key indexLocalCharPred="5"	 string="F" x="310" y="10" width="40" height="40"/>
-		<Key indexLocalCharPred="6"	 string="G"	x="360" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="5"	 string="E" x="310" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="6"	 string="F"	x="360" y="10" width="40" height="40"/>
 
-		<Key indexLocalCharPred="7" string="H"	x="410" y="10" width="40" height="40"/>
-		<Key indexLocalCharPred="8"	 string="I" x="460" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="7" string="G"	x="410" y="10" width="40" height="40"/>
+		<Key indexLocalCharPred="8"	 string="H" x="460" y="10" width="40" height="40"/>
 	</Block>
 	<Block>
-		<Key indexLocalCharPred="5" string="O" x="310" 	y="70" width="40" height="40"/>
-		<Key indexLocalCharPred="6" string="P" x="360" y="70" width="40" height="40"/>
-		<Key indexLocalCharPred="7" string="Q"	x="410" y="70" width="40" height="40"/>
-		<Key indexLocalCharPred="8" string="R" x="460" y="70" width="40" height="40"/>
+		<Key indexLocalCharPred="5" string="N" x="310" 	y="70" width="40" height="40"/>
+		<Key indexLocalCharPred="6" string="O" x="360" y="70" width="40" height="40"/>
+		<Key indexLocalCharPred="7" string="P"	x="410" y="70" width="40" height="40"/>
+		<Key indexLocalCharPred="8" string="Q" x="460" y="70" width="40" height="40"/>
 
 	</Block>
 	<Block>
-		<Key indexLocalCharPred="5" string="X" x="310" y="130" width="40" height="40"/>
-		<Key indexLocalCharPred="6" string="Y" x="360" y="130" width="40" height="40"/>
+		<Key indexLocalCharPred="5" string="W" x="310" y="130" width="40" height="40"/>
+		<Key indexLocalCharPred="6" string="X" x="360" y="130" width="40" height="40"/>
 
 	
-		<Key indexLocalCharPred="7" string="Z" x="410" y="130" width="40" height="40"/>
-		<Key indexLocalCharPred="8" string=" " x="460" y="130" width="40" height="40"/>
+		<Key indexLocalCharPred="7" string="Y" x="410" y="130" width="40" height="40"/>
+		<Key indexLocalCharPred="8" string="Z" x="460" y="130" width="40" height="40"/>
 	</Block>
 </Block>	
 	

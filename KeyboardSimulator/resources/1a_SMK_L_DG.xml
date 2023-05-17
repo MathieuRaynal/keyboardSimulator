@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="keyboard.xsd" localCharPrediction="false" charPrediction="false" wordPrediction="false">
+		
+		<Key indexCharPred="0"	 string=" "	x="10" 	y="10" width="50" height="50"/>
+		<Key indexCharPred="1"	 string="A" x="70" 	y="10" width="50" height="50"/>
+		<Key indexCharPred="2"	 string="B" x="130" y="10" width="50" height="50"/>
+		<Key indexCharPred="3"	 string="C"	x="190" y="10" width="50" height="50"/>
+		<Key indexCharPred="4"	 string="D" x="250" y="10" width="50" height="50"/>
+		<Key indexCharPred="5"	 string="E" x="310" y="10" width="50" height="50"/>
+		<Key indexCharPred="6"	 string="F"	x="370" y="10" width="50" height="50"/>
+		<Key indexCharPred="7" 	 string="G"	x="430" y="10" width="50" height="50"/>
+		<Key indexCharPred="8"	 string="H" x="490" y="10" width="50" height="50"/>
+
+
+		<Key indexCharPred="9"	 string="I" x="10" y="70" width="50" height="50"/>
+		<Key indexCharPred="10"	 string="J"	x="70" y="70" width="50" height="50"/>
+		<Key indexCharPred="11" string="K" x="130" y="70" width="50" height="50"/>
+		<Key indexCharPred="12" string="L" x="190" y="70" width="50" height="50"/>
+		<Key indexCharPred="13" string="M"	x="250" y="70" width="50" height="50"/>
+		<Key indexCharPred="14" string="N" x="310" 	y="70" width="50" height="50"/>
+		<Key indexCharPred="15" string="O" x="370" y="70" width="50" height="50"/>
+		<Key indexCharPred="16" string="P"	x="430" y="70" width="50" height="50"/>
+		<Key indexCharPred="17" string="Q" x="490" y="70" width="50" height="50"/>
+
+
+		<Key indexCharPred="18" string="R"	x="10" 	y="130" width="50" height="50"/>
+		<Key indexCharPred="19" string="S" x="70" 	y="130" width="50" height="50"/>
+		<Key indexCharPred="20" string="T" x="130" y="130" width="50" height="50"/>
+		<Key indexCharPred="21" string="U"	x="190" y="130" width="50" height="50"/>
+		<Key indexCharPred="22" string="V" x="250" y="130" width="50" height="50"/>
+		<Key indexCharPred="23" string="W" x="310" y="130" width="50" height="50"/>
+		<Key indexCharPred="24" string="X" x="370" y="130" width="50" height="50"/>
+
+	
+		<Key indexCharPred="25" string="Y" x="430" y="130" width="50" height="50"/>
+		<Key indexCharPred="26" string="Z" x="490" y="130" width="50" height="50"/>
+
+</Keyboard>
