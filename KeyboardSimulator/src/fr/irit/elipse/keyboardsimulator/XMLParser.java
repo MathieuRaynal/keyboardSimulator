@@ -11,11 +11,13 @@ public class XMLParser implements ContentHandler{
 	Pile pile;
 	Keyboard keyboard;
 	Block currentBlock;
+	int nbWords;
 	
 	public XMLParser(Keyboard kb){
 		pile = new Pile();
 		keyboard = kb;
 		currentBlock = keyboard.getKeyboardLayout();
+		nbWords = 0;
 	}
 
 	@Override
@@ -43,8 +45,10 @@ public class XMLParser implements ContentHandler{
 					indexLocalCharPred = Integer.parseInt(atts.getValue("indexLocalCharPred"));
 				if(atts.getValue("indexCharPred")!=null)
 					indexCharPred = Integer.parseInt(atts.getValue("indexCharPred"));
-				if(atts.getValue("indexWordPred")!=null)
+				if(atts.getValue("indexWordPred")!=null) {
 					indexWordPred = Integer.parseInt(atts.getValue("indexWordPred"));
+					nbWords++;
+				}
 				int x = Integer.parseInt(atts.getValue("x"));
 				int y = Integer.parseInt(atts.getValue("y"));
 				int width = Integer.parseInt(atts.getValue("width"));
@@ -67,6 +71,9 @@ public class XMLParser implements ContentHandler{
 				parent.addChild(currentBlock);
 				currentBlock = parent;
 				System.out.println("Taille pile : "+pile.size());
+				break;
+			case "keyboard":
+				keyboard.setNbWords(nbWords);
 				break;
 		}
 	}

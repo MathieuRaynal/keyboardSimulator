@@ -6,7 +6,7 @@ import java.util.Observer;
 import javax.swing.JFrame;
 
 public class KeyboardSimulator extends Observable implements Observer{
-	public static final int DEFAULT_ACTIVATION_TIME = 20;
+	public static final int DEFAULT_ACTIVATION_TIME = 50;
 	Corpus corpus;
 	Keyboard keyboard;
 	Mot mot;
@@ -28,7 +28,7 @@ public class KeyboardSimulator extends Observable implements Observer{
 	
 	public KeyboardSimulator(Keyboard kb,String logFile){
 		corpus = new Corpus();
-		corpus.load("resources/corpus_2000_Cherifa.txt");
+		corpus.load("resources/corpus.txt");
 		logger = new Logger(logFile);
 		logger.debutSimulation();
 		keyboard = kb;
@@ -56,6 +56,7 @@ public class KeyboardSimulator extends Observable implements Observer{
 		mot = corpus.getNextWord();
 		logger.debutDeMot(mot);
 		motEnCours = mot.getMot();
+//		System.out.println("Deb : "+motEnCours+".");
 		saisie = "";
 		initNb();
 		return true;
@@ -74,21 +75,35 @@ public class KeyboardSimulator extends Observable implements Observer{
 		String prefixe = s.substring(0,6);
 		String res = s.substring(6).toLowerCase();
 		if(!res.equals("layout")){
-//			System.out.println(s+" = "+prefixe+"+"+res);
+//			System.out.println(s+" = "+prefixe+"+"+res+"_"+motEnCours+"_");
 			switch(prefixe) {
 				case "[A](B)":
+//					System.out.println("---"+res+"_"+motEnCours+"_");
 					nbActivationBlock++;
-					if(keyboard.containsWord(saisie+motEnCours)) {
-						if(containsWord(res, saisie+motEnCours))
+					if(!motEnCours.trim().equals("") && keyboard.containsWord(saisie+motEnCours)) {
+//						System.out.println("passe ici");
+						if(containsWord(res, saisie+motEnCours)) {
 							keyboard.validate();
-					}else if(res.contains(motEnCours.subSequence(0, 1))) {
-						keyboard.validate();
+						}
+					}else {
+//						System.out.println(">>>"+res+"_"+motEnCours+"_");
+						if(res.contains("/")) {
+//							System.out.println("--->>>"+res+"_"+motEnCours+"_");
+							String[] words = res.split("/");
+//							System.out.println("Words : "+words);
+							for(String w:words) {
+//								System.out.println("___"+w+"_");
+								if(w.equals(motEnCours.subSequence(0, 1)))
+									keyboard.validate();
+							}
+						}else if(res.contains(motEnCours.subSequence(0, 1)))
+							keyboard.validate();
 					}
 				break;
 				case "[A](K)":
 					nbActivationKey++;
-					if(keyboard.containsWord(saisie+motEnCours)) {
-						if(res.equals(saisie+motEnCours))
+					if(!motEnCours.trim().equals("") && keyboard.containsWord(saisie+motEnCours)) {
+						if(res.equals(saisie+motEnCours.trim()))
 							keyboard.validate();
 					}else if(res.equals(motEnCours.subSequence(0, 1))) {
 						keyboard.validate();
@@ -98,19 +113,31 @@ public class KeyboardSimulator extends Observable implements Observer{
 					nbValidationBlock++;
 				break;
 				case "[V](K)":
+//					System.out.println("-->"+res+"="+saisie+"+"+motEnCours);
 					if(res.equals(saisie+motEnCours)) {
 						saisie += motEnCours; 
 						motEnCours = "";
 					}else {
-						saisie = saisie + res;	
-						motEnCours = motEnCours.substring(res.length());
+						if(res.equals(" ")) {
+							saisie = saisie + res;	
+							motEnCours = "";
+						}else {
+							if(res.length()>1) {
+								saisie = res.trim();	
+								motEnCours = " ";
+							}
+							else if(res.length()==1) {
+								saisie = saisie + res.trim();	
+								motEnCours = motEnCours.substring(1);
+							}
+						}
 					}
 					
 					nbValidationKey++;
 //					System.out.println("*** Saisie : "+saisie);
 					
 					if(motEnCours.length()==0){
-						System.out.println("Mot termine : "+saisie);
+						System.out.println("Mot termine : "+saisie+".");
 						logger.finDeMot(nbActivationBlock, nbValidationBlock, nbActivationKey, nbValidationKey);
 						if(corpus.isEmpty()){
 							System.out.println("Saisie terminee");
@@ -139,14 +166,17 @@ public class KeyboardSimulator extends Observable implements Observer{
 	
 	public boolean containsWord(String res, String word) {
 		String[] words = res.split("/");
-		for(String w:words)
-			if(w.trim().equals(word))
+//		System.out.println(res+"-->"+words[0]+"---"+word+".");
+		for(String w:words) {
+//			System.out.println("-->"+w+" "+word.trim()+".");
+			if(w.equals(word.trim()))
 				return true;
+		}
 		return false;
 	}
 	
 	public static void main(String[] args){
-		String name = "alpha";
+		String name = "PS_RC_Cmulti";
 		String clavier = "resources/"+name+".xml";
 		String log = "logs/clavier"+name+".csv";
 		new KeyboardSimulator(new Keyboard(clavier,DEFAULT_ACTIVATION_TIME),log);

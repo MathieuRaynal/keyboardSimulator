@@ -39,6 +39,7 @@ public class Keyboard extends JComponent implements Observer{
 	private String motEnCours;
 	private WordPredictor wordPredictor;
 	private ArrayList<String> wordList;
+	private int nbWords;
 	
 	public Keyboard(String clavier, int activationTime){
 		super();
@@ -46,6 +47,7 @@ public class Keyboard extends JComponent implements Observer{
 		localCharPrediction = false;
 		charPrediction = false;
 		wordPrediction = false;
+		nbWords = 0;
 		initKeyboard(clavier);
 		motEnCours = "";
 		wordList = null;
@@ -74,6 +76,10 @@ public class Keyboard extends JComponent implements Observer{
 		}
 		setPreferredSize(new Dimension(600, 500));
 		layout.activate();
+	}
+	
+	public void setNbWords(int nb) {
+		nbWords = nb;
 	}
 	
 	public int getActivationTime() {
@@ -139,9 +145,14 @@ public class Keyboard extends JComponent implements Observer{
 	public boolean containsWord(String word){
 		if(wordList==null)
 			return false;
-		for(String w:wordList)
-			if(w.equals(word))
+		int i = 0;
+		while(i<nbWords && i<wordList.size()) {
+			String w = wordList.get(i);
+//			System.out.println(w+"___"+word+".");
+			if(w.equals(word.trim()))
 				return true;
+			i++;
+		}
 		return false;
 	}
 	
