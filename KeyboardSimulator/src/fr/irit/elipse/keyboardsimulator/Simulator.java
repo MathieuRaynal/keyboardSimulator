@@ -10,7 +10,13 @@ public class Simulator implements Observer{
 	
 	public Simulator() {
 		claviers = new ArrayList<String>();
-		
+
+		claviers.add("1a_SMK_HH");
+		claviers.add("1a_SMK_nary");
+		claviers.add("1a_SMK_RC");
+		claviers.add("1a_SMK_L");
+
+		/*
 		
 		//claviers.add("CL4_DL_N");//idée gardée
 		claviers.add("PS_RC_clavier");//idée gardée
@@ -79,7 +85,7 @@ public class Simulator implements Observer{
 		
 		//claviers.add("1a_SMK_anglais");
 		//claviers.add("1b_SMK_anglais");
-		//claviers.add("1c_SMK_anglais");
+		//claviers.add("1c_SMK_anglais");*/
 		
 	}
 	
