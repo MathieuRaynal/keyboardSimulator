@@ -11,6 +11,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.awt.geom.Point2D;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class LoggerXML {
 
@@ -78,10 +80,20 @@ public class LoggerXML {
         transformer.transform(source, file);
     }
 
+    // Util functions
+    // =========================================================================
+
+    public static String toTimestampedPath(String path) {
+        String[] parts = path.split("\\.");
+        String timestamp = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
+
+        return parts[0] + "-" + timestamp + "." + parts[1];
+    }
+
     // Custom functions
     // ========================================================================
-    public void logEyePosition(Point2D pos) {
-        String text = pos.getX() + ":" + pos.getY();
+    public void logEyePosition(float x, float y) {
+        String text = x + ":" + y;
         log("eyePosition", text);
     }
 }

@@ -2,6 +2,9 @@ package fr.irit.elipse.keyboardsimulator;
 
 import fr.irit.elipse.keyboardsimulator.eyetracking.FilteredEyeTracker;
 import fr.irit.elipse.keyboardsimulator.eyetracking.TobiiGUI;
+import fr.irit.elipse.keyboardsimulator.input.InputHandler;
+import fr.irit.elipse.keyboardsimulator.interfaces.EyeTracker;
+import fr.irit.elipse.keyboardsimulator.interfaces.UserInput;
 import fr.irit.elipse.keyboardsimulator.logging.LoggerCSV;
 import fr.irit.elipse.keyboardsimulator.logging.LoggerXML;
 
@@ -16,14 +19,14 @@ import java.util.Observer;
 import javax.swing.*;
 import javax.xml.transform.TransformerException;
 
-public class GUIKeyboard extends Thread implements KeyListener, Observer{
+public class GUIKeyboard extends Thread implements Observer {
 	private static final int DEFAULT_ACTIVATION_TIME = 1000;
 	private final Keyboard keyboard;
 	private final TobiiGUI tobii;
 	private final OverlayWindow window;
 	private final LoggerXML logger;
 	
-	public GUIKeyboard(Keyboard kb, FilteredEyeTracker tracker, LoggerXML log) {
+	public GUIKeyboard(Keyboard kb, UserInput userInput, EyeTracker tracker, LoggerXML log) {
 		logger = log;
 
 		keyboard = kb;
@@ -33,7 +36,9 @@ public class GUIKeyboard extends Thread implements KeyListener, Observer{
 		tobii = new TobiiGUI(tracker, logger);
 
 		window = new OverlayWindow("Keyboard", kb, tobii);
-		window.addKeyListener(this);
+		tobii.setWindow(window);
+
+		userInput.setKeyboard(this);
 
 		window.pack();
 		window.setLocationRelativeTo(null);
@@ -60,26 +65,10 @@ public class GUIKeyboard extends Thread implements KeyListener, Observer{
 		this.start();
 	}
 
-	@Override public void keyTyped(KeyEvent e){
+	public void onInput() {
 		keyboard.validate();
 		tobii.validate();
 	}
-
-	public void run() {
-		while(true) {
-			tobii.tick(window);
-			tobii.repaint();
-
-			try {
-				Thread.sleep(20);
-			} catch (InterruptedException e) {
-				throw new RuntimeException(e);
-			}
-		}
-	}
-
-	@Override public void keyPressed(KeyEvent e) {}
-	@Override public void keyReleased(KeyEvent e) {}
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -93,16 +82,8 @@ public class GUIKeyboard extends Thread implements KeyListener, Observer{
 		}
 		keyboard.repaint();
 	}
-	
-	public static void main(String[] args) {
-		try {
-			Keyboard kb = new Keyboard(DEFAULT_ACTIVATION_TIME);
-			FilteredEyeTracker tracker = new FilteredEyeTracker(8);
-			LoggerXML logger = LoggerXML.createInstance("logs/test-keyboard.xml");
 
-			new GUIKeyboard(kb, tracker, logger);
-		} catch (LoggerXML.LoggerCreationException e) {
-			System.out.println("Failed to create logger");
-		}
+	public OverlayWindow getWindow() {
+		return window;
 	}
 }
