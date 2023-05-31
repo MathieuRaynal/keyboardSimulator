@@ -1,40 +1,74 @@
 package fr.irit.elipse.keyboardsimulator;
 
+import fr.irit.elipse.keyboardsimulator.eyetracking.FilteredEyeTracker;
+import fr.irit.elipse.keyboardsimulator.eyetracking.TobiiGUI;
+import fr.irit.elipse.keyboardsimulator.input.InputHandler;
+import fr.irit.elipse.keyboardsimulator.interfaces.EyeTracker;
+import fr.irit.elipse.keyboardsimulator.interfaces.UserInput;
+import fr.irit.elipse.keyboardsimulator.logging.LoggerCSV;
+import fr.irit.elipse.keyboardsimulator.logging.LoggerXML;
+
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JFrame;
+import javax.swing.*;
+import javax.xml.transform.TransformerException;
 
-public class GUIKeyboard extends JFrame implements KeyListener, Observer{
+public class GUIKeyboard extends Thread implements Observer {
 	private static final int DEFAULT_ACTIVATION_TIME = 1000;
-	Keyboard keyboard;
+	private final Keyboard keyboard;
+	private final TobiiGUI tobii;
+	private final OverlayWindow window;
+	private final LoggerXML logger;
 	
-	public GUIKeyboard(Keyboard kb){
-		super("Keyboard");
-		
+	public GUIKeyboard(Keyboard kb, UserInput userInput, EyeTracker tracker, LoggerXML log) {
+		logger = log;
+
 		keyboard = kb;
 		keyboard.getKeyboardLayout().addObserver(this);
 		keyboard.getKeyboardLayout().addObserver(keyboard);
-		
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		setLayout(new BorderLayout());
-		add(keyboard);
-		addKeyListener(this);
-		
-		pack();
-		setLocationRelativeTo(null);
-		setVisible(true);
+		tobii = new TobiiGUI(tracker, logger);
+
+		window = new OverlayWindow("Keyboard", kb, tobii);
+		tobii.setWindow(window);
+
+		userInput.setKeyboard(this);
+
+		window.pack();
+		window.setLocationRelativeTo(null);
+		window.setVisible(true);
+
 		keyboard.validate();
-		
+		tobii.validate();
+
+		window.addWindowListener(new WindowAdapter()
+		{
+			@Override
+			public void windowClosing(WindowEvent e)
+			{
+				e.getWindow().dispose();
+				System.out.println("Closed");
+				try {
+					logger.save_to_xml();
+				} catch (TransformerException ignored) {
+					System.out.println("Failed to write logs to file");
+				}
+			}
+		});
+
+		this.start();
 	}
 
-	@Override public void keyTyped(KeyEvent e){keyboard.validate();}
-	@Override public void keyPressed(KeyEvent e) {}
-	@Override public void keyReleased(KeyEvent e) {}
+	public void onInput() {
+		keyboard.validate();
+		tobii.validate();
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -48,10 +82,8 @@ public class GUIKeyboard extends JFrame implements KeyListener, Observer{
 		}
 		keyboard.repaint();
 	}
-	
-	public static void main(String[] args) {
-		String name = "alpha";
-		String clavier = "resources/"+name+".xml";
-		new GUIKeyboard(new Keyboard(clavier,DEFAULT_ACTIVATION_TIME));
+
+	public OverlayWindow getWindow() {
+		return window;
 	}
 }

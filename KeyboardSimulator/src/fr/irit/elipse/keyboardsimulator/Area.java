@@ -15,6 +15,7 @@ public abstract class Area extends Observable implements ActionListener{
 	private boolean isSelected, isActive, isValidated;
 	protected Timer activeTimer;
 	
+	
 	public Area(int activationTime){
 		this.activationTime = activationTime;
 		activeTimer = new Timer(activationTime, this);

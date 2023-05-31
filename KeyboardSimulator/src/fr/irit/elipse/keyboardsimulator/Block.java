@@ -43,15 +43,15 @@ public class Block extends Area{
 	}
 	
 	public void setLocalChar(List<Character> list){
-		System.out.println("--------------------------------------------------");
-		System.out.println(list);
+//		System.out.println("--------------------------------------------------");
+//		System.out.println(list);
 		if(!name.equals(RACINE)){
 			ArrayList<Character> localList = new ArrayList<Character>();
 			for(Character c:list) 
 				if(name.contains(String.valueOf(c).toUpperCase()))
 					localList.add(c);
 
-			System.out.println(localList);
+//			System.out.println(localList);
 			for(Area a:listOfChilds)
 				a.setLocalChar(localList);
 		}else {
@@ -125,7 +125,7 @@ public class Block extends Area{
 	
 	@Override
 	public void init() {
-		currentChild = -1;		
+		currentChild = 0;//-1;
 		for(Area a : listOfChilds)
 			a.init();
 	}
@@ -172,7 +172,7 @@ public class Block extends Area{
 			}
 			g2.draw(area);
 		}
-		for(Area a:listOfChilds)
+		for(Area a: listOfChilds)
 			a.paint(g2);
 	}
 
