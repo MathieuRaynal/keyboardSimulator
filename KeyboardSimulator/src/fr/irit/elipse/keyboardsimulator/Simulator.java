@@ -11,82 +11,16 @@ public class Simulator implements Observer{
 	
 	public Simulator() {
 		claviers = new ArrayList<String>();
-
+		//claviers.add("1b_SMK_anglais");
+		claviers.add("1a_SMK_L_DG");
+		claviers.add("1a_SMK_L");
+		
+		// à tester 
+		/*claviers.add("1a_SMK_RC");
+		claviers.add("1a_SMK_L");
 		claviers.add("1a_SMK_HH");
 		claviers.add("1a_SMK_nary");
-		claviers.add("1a_SMK_RC");
-		claviers.add("1a_SMK_L");
-
-		/*
-		
-		//claviers.add("CL4_DL_N");//idée gardée
-		claviers.add("PS_RC_clavier");//idée gardée
-		claviers.add("PS_RC_C1");
-		claviers.add("PS_RC_Cmulti");
-		
-		/*claviers.add("PDG_L_N");//idée gardée
-		claviers.add("ADG_L_N");//idée gardée
-		claviers.add("AS_RC_N");
-		claviers.add("PDG_RC_N");*/
-	
-		
-		
-		
-		//claviers.add("idée1");
-		
-		//claviers.add("idée5_1");
-		//claviers.add("idée5_2");
-		//claviers.add("idée5_3");
-		
-		//claviers.add("SK_0");
-		//claviers.add("SK_1");
-		//claviers.add("SK_2");
-		
-		//claviers.add("SK3_1");
-		
-		//claviers.add("SK3_2");
-		//claviers.add("SK3_3");
-		
-		//claviers.add("SK4_0");
-		//claviers.add("SK4_1");
-		//claviers.add("SK4_2");
-		
-		claviers.add("CL3_S_N");
-		
-		claviers.add("CL3_DL_d1");
-		claviers.add("CL3_DL_dmulti");
-		
-		claviers.add("CP3_DL_d1");
-		claviers.add("CP3_DL_dmulti");
-		
-		
-		//claviers.add("CL2_DL_N");
-		//claviers.add("CL2_DL_dmulti");
-		//claviers.add("CL2_DL_d1");
-		//claviers.add("CP2_DL_N");
-		
-		//claviers.add("CL2_S_d1");
-		//claviers.add("CL2_S_dmulti");
-		//claviers.add("CP2_S_N");
-		//claviers.add("CL2_S_N");
-		
-		
-		
-		//claviers.add("");
-		//claviers.add("1a_SMK");
-		//claviers.add("1b_SMK");
-		//claviers.add("1c_SMK");
-		
-		//claviers.add("1a_SMK_DL");
-		//claviers.add("1b_SMK_DL");
-		//claviers.add("1c_SMK_DL");
-		
-		//claviers.add("1a_SMK_espace");
-		//claviers.add("1b_SMK_espace");
-		
-		//claviers.add("1a_SMK_anglais");
-		//claviers.add("1b_SMK_anglais");
-		//claviers.add("1c_SMK_anglais");*/
+		*/
 		
 	}
 	
