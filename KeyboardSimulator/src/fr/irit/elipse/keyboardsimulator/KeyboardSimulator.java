@@ -169,25 +169,7 @@ public class KeyboardSimulator extends Observable implements Observer{
 	
 	public static void main(String[] args){
 		ArrayList<String> claviers = new ArrayList<String>();
-		claviers.add("idée1");
-		
-		claviers.add("idée5_1");
-		claviers.add("idée5_2");
-		claviers.add("idée5_3");
-		
-		claviers.add("SK_0");
-		claviers.add("SK_1");
-		claviers.add("SK_2");
-		
-		
-		claviers.add("SK3_1");
-		
-		claviers.add("SK3_2");
-		claviers.add("SK3_3");
-		
-		claviers.add("SK4_0");
-		claviers.add("SK4_1");
-		claviers.add("SK4_2");
+		claviers.add("PS_RC_C1");
 		
 		
 		for (int i = 0 ; i < claviers.size(); i++){

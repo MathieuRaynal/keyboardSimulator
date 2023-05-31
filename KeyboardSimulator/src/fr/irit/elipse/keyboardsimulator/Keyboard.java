@@ -157,6 +157,7 @@ public class Keyboard extends JComponent implements Observer {
 	// Méthode de test - pour le deuxième constructeur
 	
 	public void initKeyboard() {
+		// "PS_RC_clavier"
 		loadXMLFile("resources/keyboards/CL4_DL_N.xml");
 	}
 	//fin éthode de tets 
