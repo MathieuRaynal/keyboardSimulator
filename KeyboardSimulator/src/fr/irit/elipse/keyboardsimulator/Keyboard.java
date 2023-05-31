@@ -1,20 +1,5 @@
 package fr.irit.elipse.keyboardsimulator;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.swing.JComponent;
-import javax.swing.Timer;
-
 import org.lifecompanion.model.impl.textprediction.charprediction.CharPredictor;
 import org.lifecompanion.model.impl.textprediction.charprediction.CharPredictorData;
 import org.predict4all.nlp.language.LanguageModel;
@@ -25,10 +10,27 @@ import org.predict4all.nlp.prediction.WordPrediction;
 import org.predict4all.nlp.prediction.WordPredictionResult;
 import org.predict4all.nlp.prediction.WordPredictor;
 import org.predict4all.nlp.words.WordDictionary;
-import org.xml.sax.*;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
+import fr.irit.elipse.keyboardsimulator.TextUtils;
 
-public class Keyboard extends JComponent implements Observer{
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+
+public class Keyboard extends JComponent implements Observer {
 	final File FILE_CHARS = new File("resources/char-predictions.bin");
 	final File FILE_NGRAMS = new File("resources/fr_ngrams.bin");
 	final File FILE_WORDS = new File("resources/fr_words.bin");
