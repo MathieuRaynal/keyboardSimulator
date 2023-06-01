@@ -1,24 +1,20 @@
 package fr.irit.elipse.keyboardsimulator.replay;
 
 import fr.irit.elipse.keyboardsimulator.GUIKeyboard;
-import fr.irit.elipse.keyboardsimulator.eyetracking.TobiiGUI;
+import fr.irit.elipse.keyboardsimulator.gui.TobiiWidget;
 import fr.irit.elipse.keyboardsimulator.interfaces.EyeTracker;
 import fr.irit.elipse.keyboardsimulator.interfaces.UserInput;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
-import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 
@@ -29,7 +25,7 @@ public class ReplayTimeline implements UserInput, EyeTracker {
     private final Document doc;
     private final TreeMap<Long, Event> events;
 
-    private TobiiGUI tobii;
+    private TobiiWidget tobii;
     private GUIKeyboard kb;
 
     public ReplayTimeline(String path) throws Exception {
@@ -95,7 +91,7 @@ public class ReplayTimeline implements UserInput, EyeTracker {
     }
 
     @Override
-    public void setGUI(TobiiGUI gui) {
+    public void setGUI(TobiiWidget gui) {
         this.tobii = gui;
     }
 

@@ -1,7 +1,9 @@
 package fr.irit.elipse.keyboardsimulator;
 
-import java.util.ArrayList;
-
+import fr.irit.elipse.keyboardsimulator.keyboard.Block;
+import fr.irit.elipse.keyboardsimulator.keyboard.Key;
+import fr.irit.elipse.keyboardsimulator.keyboard.Keyboard;
+import fr.irit.elipse.keyboardsimulator.keyboard.Pile;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;

@@ -1,5 +1,7 @@
 package fr.irit.elipse.keyboardsimulator;
 
+import fr.irit.elipse.keyboardsimulator.keyboard.Keyboard;
+
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;

@@ -1,5 +1,6 @@
-package fr.irit.elipse.keyboardsimulator;
+package fr.irit.elipse.keyboardsimulator.keyboard;
 
+import fr.irit.elipse.keyboardsimulator.XMLParser;
 import fr.irit.elipse.keyboardsimulator.logging.LoggerXML;
 import org.lifecompanion.model.impl.textprediction.charprediction.CharPredictor;
 import org.lifecompanion.model.impl.textprediction.charprediction.CharPredictorData;
@@ -31,13 +32,13 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Keyboard extends JComponent implements Observer {
+public class Keyboard implements Observer {
 	final File FILE_CHARS = new File("resources/char-predictions.bin");
 	final File FILE_NGRAMS = new File("resources/fr_ngrams.bin");
 	final File FILE_WORDS = new File("resources/fr_words.bin");
 	
 	private Block layout;
-	private int activationTime;
+	private final int activationTime;
 	private boolean localCharPrediction, charPrediction, wordPrediction;
 	private CharPredictor predictor;
 	private String motEnCours;
@@ -77,12 +78,11 @@ public class Keyboard extends JComponent implements Observer {
 			try {
 				WordDictionary dictionary = WordDictionary.loadDictionary(languageModel, FILE_WORDS);
 				StaticNGramTrieDictionary ngramDictionary = StaticNGramTrieDictionary.open(FILE_NGRAMS);
-			    wordPredictor = new WordPredictor(predictionParameter, dictionary, ngramDictionary);
-			}catch(Exception e) {
+				wordPredictor = new WordPredictor(predictionParameter, dictionary, ngramDictionary);
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		setPreferredSize(new Dimension(600, 500));
 		starter = new Timer(5000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -130,7 +130,6 @@ public class Keyboard extends JComponent implements Observer {
 				e.printStackTrace();
 			}
 		}
-		setPreferredSize(new Dimension(600, 500));
 		layout.activate();
 	}
 	// fin deuxième constructeur de test 
@@ -187,12 +186,6 @@ public class Keyboard extends JComponent implements Observer {
 	public void validate() {
 		layout.validate();
 	}
-	
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D)g;
-		layout.paint(g2);
-	}
 
 	public void initLayout(){
 		if(charPrediction){
@@ -213,7 +206,6 @@ public class Keyboard extends JComponent implements Observer {
 		int i = 0;
 		while(i<nbWords && i<wordList.size()) {
 			String w = wordList.get(i);
-//			System.out.println(w+"___"+word+".");
 			if(w.equals(word.trim()))
 				return true;
 			i++;

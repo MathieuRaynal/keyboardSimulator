@@ -1,29 +1,28 @@
 package fr.irit.elipse.keyboardsimulator;
 
-import fr.irit.elipse.keyboardsimulator.eyetracking.FilteredEyeTracker;
-import fr.irit.elipse.keyboardsimulator.eyetracking.TobiiGUI;
-import fr.irit.elipse.keyboardsimulator.input.InputHandler;
+import fr.irit.elipse.keyboardsimulator.gui.KeyboardWidget;
+import fr.irit.elipse.keyboardsimulator.gui.OverlayWindow;
+import fr.irit.elipse.keyboardsimulator.gui.TobiiWidget;
 import fr.irit.elipse.keyboardsimulator.interfaces.EyeTracker;
 import fr.irit.elipse.keyboardsimulator.interfaces.UserInput;
-import fr.irit.elipse.keyboardsimulator.logging.LoggerCSV;
+import fr.irit.elipse.keyboardsimulator.keyboard.Keyboard;
 import fr.irit.elipse.keyboardsimulator.logging.LoggerXML;
 
-import java.awt.BorderLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.*;
 import javax.xml.transform.TransformerException;
 
 public class GUIKeyboard extends Thread implements Observer {
 	private static final int DEFAULT_ACTIVATION_TIME = 1000;
 	private final Keyboard keyboard;
-	private final TobiiGUI tobii;
+
 	private final OverlayWindow window;
+	private final KeyboardWidget kbWidget;
+	private final TobiiWidget tobii;
+
 	private final LoggerXML logger;
 	
 	public GUIKeyboard(Keyboard kb, UserInput userInput, EyeTracker tracker, LoggerXML log) {
@@ -33,9 +32,10 @@ public class GUIKeyboard extends Thread implements Observer {
 		keyboard.getKeyboardLayout().addObserver(this);
 		keyboard.getKeyboardLayout().addObserver(keyboard);
 
-		tobii = new TobiiGUI(tracker, logger);
+		kbWidget = new KeyboardWidget(kb);
+		tobii = new TobiiWidget(tracker, logger);
 
-		window = new OverlayWindow("Keyboard", kb, tobii);
+		window = new OverlayWindow("Keyboard", kbWidget, tobii);
 		tobii.setWindow(window);
 
 		userInput.setKeyboard(this);
@@ -80,7 +80,7 @@ public class GUIKeyboard extends Thread implements Observer {
 			keyboard.getKeyboardLayout().activate();
 			keyboard.getKeyboardLayout().validate();
 		}
-		keyboard.repaint();
+		kbWidget.repaint();
 	}
 
 	public OverlayWindow getWindow() {

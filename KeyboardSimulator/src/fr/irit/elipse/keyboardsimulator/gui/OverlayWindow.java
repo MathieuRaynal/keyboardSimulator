@@ -1,4 +1,4 @@
-package fr.irit.elipse.keyboardsimulator;
+package fr.irit.elipse.keyboardsimulator.gui;
 
 import javax.swing.*;
 import java.awt.*;

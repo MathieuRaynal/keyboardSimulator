@@ -1,6 +1,5 @@
-package fr.irit.elipse.keyboardsimulator;
+package fr.irit.elipse.keyboardsimulator.keyboard;
 
-import java.awt.Graphics2D;
 import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
@@ -8,16 +7,14 @@ import java.util.*;
 import javax.swing.Timer;
 
 @SuppressWarnings("deprecation")
-public abstract class Area extends Observable implements ActionListener{
+public abstract class Area extends Observable implements ActionListener {
 	protected Rectangle2D.Double area;
-	private int activationTime;
 	private Block parent;
 	private boolean isSelected, isActive, isValidated;
 	protected Timer activeTimer;
 	
 	
 	public Area(int activationTime){
-		this.activationTime = activationTime;
 		activeTimer = new Timer(activationTime, this);
 		parent = null;
 	}
@@ -63,7 +60,5 @@ public abstract class Area extends Observable implements ActionListener{
 		setChanged(); 
 		notifyObservers(s); 
 	}
-	
-	public abstract void paint(Graphics2D g2);
 	
 }

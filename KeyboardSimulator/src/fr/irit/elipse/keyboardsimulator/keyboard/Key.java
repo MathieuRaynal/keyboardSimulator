@@ -1,15 +1,10 @@
-package fr.irit.elipse.keyboardsimulator;
+package fr.irit.elipse.keyboardsimulator.keyboard;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
-import java.util.Observable;
 
 @SuppressWarnings("deprecation")
-public class Key extends Area{
+public class Key extends Area {
 	private String initialString, string;
 	private int indexLocalCharPred, indexCharPred, indexWordPred;
 	
@@ -86,19 +81,5 @@ public class Key extends Area{
 		while(b.getParent()!=null)
 			b=b.getParent();
 		b.sendInfo(s);
-	}
-	
-	public void paint(Graphics2D g2){
-		Font f = new Font(Font.SANS_SERIF, Font.BOLD, 16);
-		if(isActive()){
-			g2.setColor(Color.BLUE);
-			g2.setStroke(new BasicStroke(2.0f));
-		}else{
-			g2.setColor(Color.BLACK);
-			g2.setStroke(new BasicStroke(1.0f));
-		}
-		g2.draw(area);
-		if(string!=null)
-			UtilsPainting.paintText(g2, f, area, string, HAlign.CENTER, VAlign.CENTER);
 	}
 }

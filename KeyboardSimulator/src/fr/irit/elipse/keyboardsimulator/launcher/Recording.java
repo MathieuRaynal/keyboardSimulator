@@ -1,8 +1,8 @@
 package fr.irit.elipse.keyboardsimulator.launcher;
 
 import fr.irit.elipse.keyboardsimulator.GUIKeyboard;
-import fr.irit.elipse.keyboardsimulator.Keyboard;
-import fr.irit.elipse.keyboardsimulator.eyetracking.FilteredEyeTracker;
+import fr.irit.elipse.keyboardsimulator.keyboard.Keyboard;
+import fr.irit.elipse.keyboardsimulator.record.FilteredEyeTracker;
 import fr.irit.elipse.keyboardsimulator.input.InputHandler;
 import fr.irit.elipse.keyboardsimulator.logging.LoggerXML;
 

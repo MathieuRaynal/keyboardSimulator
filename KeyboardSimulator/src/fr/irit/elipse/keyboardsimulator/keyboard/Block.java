@@ -1,14 +1,12 @@
-package fr.irit.elipse.keyboardsimulator;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
+package fr.irit.elipse.keyboardsimulator.keyboard;
+
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 @SuppressWarnings("deprecation")
 public class Block extends Area {
+
 	public static final String RACINE = "Layout";
 	private String name;
 	private ArrayList<Area> listOfChilds;
@@ -161,19 +159,8 @@ public class Block extends Area {
 		}
 	}
 	
-	public void paint(Graphics2D g2) {
-		if(area!=null) {
-			if(isActive()){
-				g2.setColor(Color.BLUE);
-				g2.setStroke(new BasicStroke(2.0f));
-			}else{
-				g2.setColor(Color.BLACK);
-				g2.setStroke(new BasicStroke(1.0f));
-			}
-			g2.draw(area);
-		}
-		for(Area a: listOfChilds)
-			a.paint(g2);
+	public ArrayList<Area> getChildren() {
+		return listOfChilds;
 	}
 
 	public void sendInfo(String s) {

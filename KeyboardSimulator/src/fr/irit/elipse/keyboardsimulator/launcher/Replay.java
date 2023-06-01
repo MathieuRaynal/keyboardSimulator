@@ -1,7 +1,7 @@
 package fr.irit.elipse.keyboardsimulator.launcher;
 
 import fr.irit.elipse.keyboardsimulator.GUIKeyboard;
-import fr.irit.elipse.keyboardsimulator.Keyboard;
+import fr.irit.elipse.keyboardsimulator.keyboard.Keyboard;
 import fr.irit.elipse.keyboardsimulator.replay.ReplayTimeline;
 
 import static fr.irit.elipse.keyboardsimulator.KeyboardSimulator.DEFAULT_ACTIVATION_TIME;

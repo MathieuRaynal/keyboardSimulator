@@ -1,5 +1,6 @@
-package fr.irit.elipse.keyboardsimulator.eyetracking;
+package fr.irit.elipse.keyboardsimulator.record;
 
+import fr.irit.elipse.keyboardsimulator.gui.TobiiWidget;
 import fr.irit.elipse.keyboardsimulator.interfaces.EyeTracker;
 import tobii.Tobii;
 
@@ -10,7 +11,7 @@ import java.awt.event.ActionListener;
 public class FilteredEyeTracker implements EyeTracker, ActionListener {
     private float xMean, yMean;
     private final int size;
-    private TobiiGUI gui;
+    private TobiiWidget gui;
 
     private final Timer timer;
 
@@ -31,7 +32,7 @@ public class FilteredEyeTracker implements EyeTracker, ActionListener {
     }
 
     @Override
-    public void setGUI(TobiiGUI gui) {
+    public void setGUI(TobiiWidget gui) {
         this.gui = gui;
     }
 

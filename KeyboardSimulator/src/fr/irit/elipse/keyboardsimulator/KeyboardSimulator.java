@@ -1,5 +1,6 @@
 package fr.irit.elipse.keyboardsimulator;
 
+import fr.irit.elipse.keyboardsimulator.keyboard.Keyboard;
 import fr.irit.elipse.keyboardsimulator.logging.LoggerCSV;
 
 import java.util.ArrayList;

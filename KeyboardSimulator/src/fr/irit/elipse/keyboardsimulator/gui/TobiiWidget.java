@@ -1,20 +1,19 @@
-package fr.irit.elipse.keyboardsimulator.eyetracking;
+package fr.irit.elipse.keyboardsimulator.gui;
 
 import fr.irit.elipse.keyboardsimulator.interfaces.EyeTracker;
 import fr.irit.elipse.keyboardsimulator.logging.LoggerXML;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Point2D;
 
-public class TobiiGUI extends JPanel {
+public class TobiiWidget extends JPanel {
     public static final int GAZE_SIZE = 50;
     private final LoggerXML logger;
 
     private JFrame window;
     private int eyeX, eyeY;
 
-    public TobiiGUI(EyeTracker tracker, LoggerXML logger) {
+    public TobiiWidget(EyeTracker tracker, LoggerXML logger) {
         this.eyeX = 0;
         this.eyeY = 0;
         this.logger = logger;

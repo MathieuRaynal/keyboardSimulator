@@ -1,4 +1,6 @@
-package fr.irit.elipse.keyboardsimulator;
+package fr.irit.elipse.keyboardsimulator.keyboard;
+
+import fr.irit.elipse.keyboardsimulator.keyboard.Block;
 
 import java.util.ArrayList;
 

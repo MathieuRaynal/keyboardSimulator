@@ -1,7 +1,7 @@
 package fr.irit.elipse.keyboardsimulator.interfaces;
 
-import fr.irit.elipse.keyboardsimulator.eyetracking.TobiiGUI;
+import fr.irit.elipse.keyboardsimulator.gui.TobiiWidget;
 
 public interface EyeTracker {
-    void setGUI(TobiiGUI gui);
+    void setGUI(TobiiWidget gui);
 }
