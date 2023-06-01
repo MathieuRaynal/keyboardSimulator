@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Observable;
 
 @SuppressWarnings("deprecation")
-public class Block extends Area{
+public class Block extends Area {
 	public static final String RACINE = "Layout";
 	private String name;
 	private ArrayList<Area> listOfChilds;

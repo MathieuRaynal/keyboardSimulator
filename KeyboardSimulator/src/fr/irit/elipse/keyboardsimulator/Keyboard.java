@@ -1,5 +1,6 @@
 package fr.irit.elipse.keyboardsimulator;
 
+import fr.irit.elipse.keyboardsimulator.logging.LoggerXML;
 import org.lifecompanion.model.impl.textprediction.charprediction.CharPredictor;
 import org.lifecompanion.model.impl.textprediction.charprediction.CharPredictorData;
 import org.predict4all.nlp.language.LanguageModel;
@@ -44,8 +45,10 @@ public class Keyboard extends JComponent implements Observer {
 	private ArrayList<String> wordList;
 	private int nbWords;
 	public Timer starter;
+
+	public LoggerXML logger;
 	
-	public Keyboard(String clavier, int activationTime){
+	public Keyboard(String clavier, int activationTime, LoggerXML logger) {
 		super();
 		this.activationTime = activationTime;
 		localCharPrediction = false;
@@ -55,6 +58,7 @@ public class Keyboard extends JComponent implements Observer {
 		initKeyboard(clavier);
 		motEnCours = "";
 		wordList = null;
+		this.logger = logger;
 		
 		if(localCharPrediction || charPrediction) {
 			// Prediction de caractères
@@ -93,7 +97,7 @@ public class Keyboard extends JComponent implements Observer {
 	
 	// deuxième constructeur de test 
 	
-	public Keyboard(int activationTime){
+	public Keyboard(int activationTime, LoggerXML logger){
 		super();
 		this.activationTime = activationTime;
 		localCharPrediction = false;
@@ -102,6 +106,7 @@ public class Keyboard extends JComponent implements Observer {
 		initKeyboard();
 		motEnCours = "";
 		wordList = null;
+		this.logger = logger;
 		
 		if(localCharPrediction || charPrediction) {
 			// Prediction de caractères
@@ -219,6 +224,17 @@ public class Keyboard extends JComponent implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		String s = (String)arg;
+
+		if (logger != null) {
+			System.out.println("update ! " + s);
+			switch (s.substring(0, 6)) {
+				case "[A](B)" -> logger.logAction("update", "block");
+				case "[A](K)" -> logger.logAction("update", "key");
+				case "[V](B)" -> logger.logAction("validate", "block");
+				case "[V](K)" -> logger.logAction("validate", "key");
+			}
+		}
+
 		if(s.startsWith("[V](K)")){
 			if(s.substring(6).equals(" ")) {
 				motEnCours = "";

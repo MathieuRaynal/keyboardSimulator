@@ -96,4 +96,10 @@ public class LoggerXML {
         String text = x + ":" + y;
         log("eyePosition", text);
     }
+
+    public void logAction(String actionType, String scope) {
+        System.out.println("Hey");
+        String text = actionType + ":" + scope;
+        log("action", text);
+    }
 }

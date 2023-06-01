@@ -12,8 +12,8 @@ public class Recording {
 
     public static void main(String[] args) {
         try {
-            Keyboard kb = new Keyboard(DEFAULT_ACTIVATION_TIME);
-            LoggerXML logger = LoggerXML.createInstance(LoggerXML.toTimestampedPath("logs/test-keyboard.xml"));
+            LoggerXML logger = LoggerXML.createInstance("logs/test-kb.xml");
+            Keyboard kb = new Keyboard(DEFAULT_ACTIVATION_TIME, logger);
 
             FilteredEyeTracker tracker = new FilteredEyeTracker(8);
             InputHandler inputHandler = new InputHandler();

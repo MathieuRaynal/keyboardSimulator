@@ -29,7 +29,7 @@ public class Simulator implements Observer{
 			String name = claviers.remove(0);
 			String clavier = "resources/"+name+".xml";
 			String log = "logs/correction/clavier_fr2k_"+name+".csv";
-			KeyboardSimulator ks = new KeyboardSimulator(new Keyboard(clavier,KeyboardSimulator.DEFAULT_ACTIVATION_TIME),log);
+			KeyboardSimulator ks = new KeyboardSimulator(new Keyboard(clavier,KeyboardSimulator.DEFAULT_ACTIVATION_TIME, null),log);
 			ks.addObserver(this);
 			System.out.println("--------------------------------------------------------------------------");
 			System.out.println("| START "+name);
