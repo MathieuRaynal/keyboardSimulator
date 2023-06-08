@@ -1,7 +1,10 @@
 package fr.irit.elipse.keyboardsimulator.interfaces;
 
-import fr.irit.elipse.keyboardsimulator.GUIKeyboard;
+import fr.irit.elipse.keyboardsimulator.keyboard.Keyboard;
+
+import javax.swing.*;
 
 public interface UserInput {
-    void setKeyboard(GUIKeyboard kb);
+    void setWindow(JFrame window);
+    void setKeyboard(Keyboard keyboard);
 }

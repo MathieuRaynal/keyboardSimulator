@@ -1,7 +1,6 @@
 package fr.irit.elipse.keyboardsimulator;
 
 import fr.irit.elipse.keyboardsimulator.keyboard.Keyboard;
-import fr.irit.elipse.keyboardsimulator.logging.LoggerCSV;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -10,7 +9,7 @@ import java.util.Observer;
 import javax.swing.JFrame;
 
 public class KeyboardSimulator extends Observable implements Observer{
-	public static final int DEFAULT_ACTIVATION_TIME = 800;
+	public static final int DEFAULT_ACTIVATION_TIME = 80;
 	Corpus corpus;
 	Keyboard keyboard;
 	Mot mot;
@@ -178,7 +177,7 @@ public class KeyboardSimulator extends Observable implements Observer{
 			
 			String clavier = "resources/"+claviers.get(i)+".xml";
 			String log = "logs/clavier"+claviers.get(i) +".csv";
-			new KeyboardSimulator(new Keyboard(clavier,DEFAULT_ACTIVATION_TIME, null),log);
+			new KeyboardSimulator(new Keyboard(clavier),log);
 			JFrame f = new JFrame();
 			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			f.setVisible(true);}/*

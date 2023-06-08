@@ -29,9 +29,8 @@ public class Simulator implements Observer{
 	public void startNextKeyboard() {
 		if(claviers.size()>0) {
 			String name = claviers.remove(0);
-			String clavier = "resources/"+name+".xml";
 			String log = "logs/correction/clavier_fr2k_"+name+".csv";
-			KeyboardSimulator ks = new KeyboardSimulator(new Keyboard(clavier,KeyboardSimulator.DEFAULT_ACTIVATION_TIME, null),log);
+			KeyboardSimulator ks = new KeyboardSimulator(new Keyboard(name),log);
 			ks.addObserver(this);
 			System.out.println("--------------------------------------------------------------------------");
 			System.out.println("| START "+name);

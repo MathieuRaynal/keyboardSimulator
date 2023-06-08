@@ -6,68 +6,57 @@ import fr.irit.elipse.keyboardsimulator.gui.TobiiWidget;
 import fr.irit.elipse.keyboardsimulator.interfaces.EyeTracker;
 import fr.irit.elipse.keyboardsimulator.interfaces.UserInput;
 import fr.irit.elipse.keyboardsimulator.keyboard.Keyboard;
-import fr.irit.elipse.keyboardsimulator.logging.LoggerXML;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.xml.transform.TransformerException;
-
 public class GUIKeyboard extends Thread implements Observer {
-	private static final int DEFAULT_ACTIVATION_TIME = 1000;
+	public static final int DEFAULT_ACTIVATION_TIME = 1000;
 	private final Keyboard keyboard;
 
 	private final OverlayWindow window;
 	private final KeyboardWidget kbWidget;
 	private final TobiiWidget tobii;
 
-	private final LoggerXML logger;
+	public interface CloseListener {
+		void onClose();
+	}
 	
-	public GUIKeyboard(Keyboard kb, UserInput userInput, EyeTracker tracker, LoggerXML log) {
-		logger = log;
-
+	public GUIKeyboard(Keyboard kb, UserInput userInput, EyeTracker tracker) {
 		keyboard = kb;
 		keyboard.getKeyboardLayout().addObserver(this);
 		keyboard.getKeyboardLayout().addObserver(keyboard);
 
 		kbWidget = new KeyboardWidget(kb);
-		tobii = new TobiiWidget(tracker, logger);
+		tobii = new TobiiWidget(tracker);
 
 		window = new OverlayWindow("Keyboard", kbWidget, tobii);
 		tobii.setWindow(window);
 
-		userInput.setKeyboard(this);
+		userInput.setWindow(window);
+		userInput.setKeyboard(keyboard);
 
 		window.pack();
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 
-		keyboard.validate();
-		tobii.validate();
+		kbWidget.repaint();
 
+		this.start();
+	}
+
+	public void onClose(CloseListener listener) {
 		window.addWindowListener(new WindowAdapter()
 		{
 			@Override
 			public void windowClosing(WindowEvent e)
 			{
 				e.getWindow().dispose();
-				System.out.println("Closed");
-				try {
-					logger.save_to_xml();
-				} catch (TransformerException ignored) {
-					System.out.println("Failed to write logs to file");
-				}
+				listener.onClose();
 			}
 		});
-
-		this.start();
-	}
-
-	public void onInput() {
-		keyboard.validate();
-		tobii.validate();
 	}
 
 	@Override
@@ -85,5 +74,9 @@ public class GUIKeyboard extends Thread implements Observer {
 
 	public OverlayWindow getWindow() {
 		return window;
+	}
+
+	public Keyboard getKeyboard() {
+		return keyboard;
 	}
 }

@@ -1,4 +1,4 @@
-package fr.irit.elipse.keyboardsimulator.logging;
+package fr.irit.elipse.keyboardsimulator;
 
 import fr.irit.elipse.keyboardsimulator.Mot;
 

@@ -1,21 +1,38 @@
-package fr.irit.elipse.keyboardsimulator;
+package fr.irit.elipse.keyboardsimulator.keyboard;
 
-import fr.irit.elipse.keyboardsimulator.keyboard.Block;
-import fr.irit.elipse.keyboardsimulator.keyboard.Key;
-import fr.irit.elipse.keyboardsimulator.keyboard.Keyboard;
-import fr.irit.elipse.keyboardsimulator.keyboard.Pile;
-import org.xml.sax.Attributes;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
+import org.xml.sax.*;
+import org.xml.sax.helpers.XMLReaderFactory;
 
-public class XMLParser implements ContentHandler{
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+
+public class KeyboardLoader implements ContentHandler{
+	public static final String PATH_TO_KEYBOARDS = "resources/keyboards/";
+
 	Pile pile;
 	Keyboard keyboard;
 	Block currentBlock;
 	int nbWords;
-	
-	public XMLParser(Keyboard kb){
+
+	public static void loadXMLFile(Keyboard kb, String kbLayoutId) {
+		String fileName = PATH_TO_KEYBOARDS + kbLayoutId + ".xml";
+		XMLReader saxReader;
+
+		kb.setLayout(new Block(Block.RACINE));
+		try{
+			saxReader = XMLReaderFactory.createXMLReader();
+			saxReader.setContentHandler(new KeyboardLoader(kb));
+
+			InputStreamReader isr = new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_8);
+			InputSource is = new InputSource();
+			is.setCharacterStream(isr);
+			saxReader.parse(is);
+		} catch (IOException | SAXException e) {e.printStackTrace();}
+	}
+
+	private KeyboardLoader(Keyboard kb){
 		pile = new Pile();
 		keyboard = kb;
 		currentBlock = keyboard.getKeyboardLayout();
@@ -28,7 +45,7 @@ public class XMLParser implements ContentHandler{
 		switch(element){
 			case "block":
 				pile.empiler(currentBlock);
-				currentBlock = new Block(keyboard.getActivationTime());
+				currentBlock = new Block();
 				break;
 			case "keyboard":
 				if(atts.getValue("localCharPrediction")!=null)
@@ -55,7 +72,7 @@ public class XMLParser implements ContentHandler{
 				int y = Integer.parseInt(atts.getValue("y"));
 				int width = Integer.parseInt(atts.getValue("width"));
 				int height = Integer.parseInt(atts.getValue("height"));
-				Key k = new Key(keyboard.getActivationTime(), string, indexLocalCharPred, indexCharPred, indexWordPred, x, y, width, height);
+				Key k = new Key(string, indexLocalCharPred, indexCharPred, indexWordPred, x, y, width, height);
 				currentBlock.addChild(k);
 				break;
 		}

@@ -8,7 +8,7 @@
 		<Key indexLocalCharPred="3"	 string="D"		x="190" y="10" 	width="50" 	height="50"/>
 		<Key indexLocalCharPred="4"	 string="E"		x="250" y="10" 	width="50" 	height="50"/>
         <Key indexLocalCharPred="5"	 string="F"		x="310" y="10" 	width="50" 	height="50"/>
-        <Key indexLocalCharPred="6"	 string=" "		x="250" y="10" 	width="50" 	height="50"/>
+        <Key indexLocalCharPred="6"	 string=" "		x="370" y="10" 	width="50" 	height="50"/>
 	</Block>
 	<Block>
 	    <Key indexLocalCharPred="0"	 string="G"		x="10" 	y="70" 	width="50" 	height="50"/>

@@ -3,13 +3,14 @@ package fr.irit.elipse.keyboardsimulator.keyboard;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
-@SuppressWarnings("deprecation")
 public class Key extends Area {
-	private String initialString, string;
-	private int indexLocalCharPred, indexCharPred, indexWordPred;
+	private final String initialString;
+	private String string;
+	private int indexLocalCharPred;
+	private final int indexCharPred, indexWordPred;
 	
-	public Key(int activationTime, String s, double x, double y, double w, double h){
-		super(activationTime);
+	public Key(String s, double x, double y, double w, double h){
+		super();
 		this.initialString = s;
 		this.string = s;
 		indexCharPred = -1;
@@ -18,8 +19,8 @@ public class Key extends Area {
 		area = new Rectangle2D.Double(x, y, w, h);
 	}
 	
-	public Key(int activationTime, String s, int indexLocalCharPred, int indexCharPred, int indexWordPred, double x, double y, double w, double h){
-		super(activationTime);
+	public Key(String s, int indexLocalCharPred, int indexCharPred, int indexWordPred, double x, double y, double w, double h){
+		super();
 		this.initialString = s;
 		this.string = s;
 		this.indexLocalCharPred = indexLocalCharPred;
@@ -63,6 +64,9 @@ public class Key extends Area {
 	
 	public String getString(){return string;}
 
+	// Input handling
+	// =========================================================================
+
 	@Override
 	public void activate(){
 		super.activate();
@@ -71,9 +75,10 @@ public class Key extends Area {
 	
 	@Override
 	public void validate(){
-		desactivate();
 		sendInfo("[V](K)"+getString());
 	}
+
+	// =========================================================================
 
 	@Override
 	public void sendInfo(String s) {

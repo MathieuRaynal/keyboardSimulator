@@ -1,7 +1,5 @@
 package fr.irit.elipse.keyboardsimulator.keyboard;
 
-import fr.irit.elipse.keyboardsimulator.XMLParser;
-import fr.irit.elipse.keyboardsimulator.logging.LoggerXML;
 import org.lifecompanion.model.impl.textprediction.charprediction.CharPredictor;
 import org.lifecompanion.model.impl.textprediction.charprediction.CharPredictorData;
 import org.predict4all.nlp.language.LanguageModel;
@@ -12,21 +10,10 @@ import org.predict4all.nlp.prediction.WordPrediction;
 import org.predict4all.nlp.prediction.WordPredictionResult;
 import org.predict4all.nlp.prediction.WordPredictor;
 import org.predict4all.nlp.words.WordDictionary;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
 import fr.irit.elipse.keyboardsimulator.TextUtils;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -38,7 +25,6 @@ public class Keyboard implements Observer {
 	final File FILE_WORDS = new File("resources/fr_words.bin");
 	
 	private Block layout;
-	private final int activationTime;
 	private boolean localCharPrediction, charPrediction, wordPrediction;
 	private CharPredictor predictor;
 	private String motEnCours;
@@ -47,147 +33,125 @@ public class Keyboard implements Observer {
 	private int nbWords;
 	public Timer starter;
 
-	public LoggerXML logger;
+	private Area activeArea;
+
+	private String layoutId;
 	
-	public Keyboard(String clavier, int activationTime, LoggerXML logger) {
+	public Keyboard(String keyboardLayout) {
 		super();
-		this.activationTime = activationTime;
+		layoutId = keyboardLayout;
+		initKeyboard();
+
+		activeArea = layout.getChildren().get(layout.getChildren().size()-1);
+
+		// starter = new Timer(5000, e -> {
+		// 	 layout.activate();
+		//	 starter.stop();
+		// });
+		// starter.start();
+	}
+
+	// deuxième constructeur de test 
+	
+	public Keyboard(){
+		this("CL4_DL_N");
+	}
+
+	public void initKeyboard() {
 		localCharPrediction = false;
 		charPrediction = false;
 		wordPrediction = false;
 		nbWords = 0;
-		initKeyboard(clavier);
 		motEnCours = "";
 		wordList = null;
-		this.logger = logger;
-		
-		if(localCharPrediction || charPrediction) {
-			// Prediction de caractères
-			CharPredictorData data = new CharPredictorData();
-			try {
-				data.loadFrom(FILE_CHARS);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-			predictor = new CharPredictor(data);
-		}
-		if(wordPrediction) {
-			// Prédiction de mots
-			LanguageModel languageModel = new FrenchLanguageModel();
-			PredictionParameter predictionParameter = new PredictionParameter(languageModel);
-			try {
-				WordDictionary dictionary = WordDictionary.loadDictionary(languageModel, FILE_WORDS);
-				StaticNGramTrieDictionary ngramDictionary = StaticNGramTrieDictionary.open(FILE_NGRAMS);
-				wordPredictor = new WordPredictor(predictionParameter, dictionary, ngramDictionary);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		starter = new Timer(5000, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				layout.activate();
-				starter.stop();
-			}
-		});
-		starter.start();
-	}
-	
-	
-	
-	// deuxième constructeur de test 
-	
-	public Keyboard(int activationTime, LoggerXML logger){
-		super();
-		this.activationTime = activationTime;
-		localCharPrediction = false;
-		charPrediction = false;
-		wordPrediction = false;
-		initKeyboard();
-		motEnCours = "";
-		wordList = null;
-		this.logger = logger;
-		
-		if(localCharPrediction || charPrediction) {
-			// Prediction de caractères
-			CharPredictorData data = new CharPredictorData();
-			try {
-				data.loadFrom(FILE_CHARS);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-			predictor = new CharPredictor(data);
-		}
-		if(wordPrediction) {
-			// Prédiction de mots
-			LanguageModel languageModel = new FrenchLanguageModel();
-			PredictionParameter predictionParameter = new PredictionParameter(languageModel);
-			try {
-				WordDictionary dictionary = WordDictionary.loadDictionary(languageModel, FILE_WORDS);
-				StaticNGramTrieDictionary ngramDictionary = StaticNGramTrieDictionary.open(FILE_NGRAMS);
-			    wordPredictor = new WordPredictor(predictionParameter, dictionary, ngramDictionary);
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-		layout.activate();
+
+		KeyboardLoader.loadXMLFile(this, layoutId);
 	}
 	// fin deuxième constructeur de test 
-	
+
+	public void setLayout(Block block) {
+		this.layout = block;
+	}
+
 	public void setNbWords(int nb) {
 		nbWords = nb;
 	}
-	
-	public int getActivationTime() {
-		return activationTime;
+
+	public String getLayoutId() {
+		return layoutId;
 	}
 	
 	public void setCharPrediction(boolean charPrediction){
 		this.charPrediction = charPrediction;
+		createPredictor(charPrediction);
 	}
 	
 	public void setLocalCharPrediction(boolean localCharPrediction){
 		this.localCharPrediction = localCharPrediction;
+		createPredictor(localCharPrediction);
 	}
-	
+
+	private void createPredictor(boolean shouldCreate) {
+		if (!shouldCreate || predictor != null) return;
+
+		// Prediction de caractères
+		CharPredictorData data = new CharPredictorData();
+		try {
+			data.loadFrom(FILE_CHARS);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		predictor = new CharPredictor(data);
+		System.out.println("PING");
+	}
+
 	public void setWordPrediction(boolean wordPrediction){
 		this.wordPrediction = wordPrediction;
-	}
-	
-	public void initKeyboard(String keyboard) {
-		loadXMLFile(keyboard);
-	}
-	
-	// Méthode de test - pour le deuxième constructeur
-	
-	public void initKeyboard() {
-		// "PS_RC_clavier"
-		loadXMLFile("resources/keyboards/CL4_DL_N.xml");
-	}
-	//fin éthode de tets 
 
-	public void loadXMLFile(String fileName) {
-		layout = new Block(Block.RACINE, activationTime);
-		XMLReader saxReader;
-		try{
-			saxReader = XMLReaderFactory.createXMLReader();
-			saxReader.setContentHandler(new XMLParser(this));
-			try{
-				InputStreamReader isr = new InputStreamReader(new FileInputStream(fileName),StandardCharsets.UTF_8);
-				InputSource is = new InputSource();
-				is.setCharacterStream(isr);
-				saxReader.parse(is);
-			}catch (IOException e){e.printStackTrace();}
-		}catch (SAXException e) {e.printStackTrace();}
+		if (!wordPrediction) {
+			wordPredictor = null;
+			return;
+		}
+
+		// Prédiction de mots
+		LanguageModel languageModel = new FrenchLanguageModel();
+		PredictionParameter predictionParameter = new PredictionParameter(languageModel);
+		try {
+			WordDictionary dictionary = WordDictionary.loadDictionary(languageModel, FILE_WORDS);
+			StaticNGramTrieDictionary ngramDictionary = StaticNGramTrieDictionary.open(FILE_NGRAMS);
+			wordPredictor = new WordPredictor(predictionParameter, dictionary, ngramDictionary);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public Block getKeyboardLayout(){return layout;}
+	public Block getKeyboardLayout(){ return layout; }
+
+	// Input handling
+	// =========================================================================
+
+	public void activate() {
+		System.out.println("Activate");
+		activeArea.desactivate();
+
+		activeArea = ((Block) activeArea.getParent()).getNextChild();
+		activeArea.activate();
+	}
 
 	public void validate() {
-		layout.validate();
+		System.out.println("Validate");
+		activeArea.validate();
+		activeArea.desactivate();
+
+		if(activeArea.getClass().equals(Block.class)) activeArea = ((Block) activeArea).getNextChild();
+		else if(activeArea.getClass().equals(Key.class)) activeArea = layout.getChildren().get(0);
+
+		activeArea.activate();
 	}
 
-	public void initLayout(){
+	// =========================================================================
+
+	public void initLayout() {
 		if(charPrediction){
 			motEnCours = "";
 			List<Character> listChar = TextUtils.getCharList(predictor.predict(motEnCours, 100));
@@ -216,17 +180,6 @@ public class Keyboard implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		String s = (String)arg;
-
-		if (logger != null) {
-			System.out.println("update ! " + s);
-			switch (s.substring(0, 6)) {
-				case "[A](B)" -> logger.logAction("update", "block");
-				case "[A](K)" -> logger.logAction("update", "key");
-				case "[V](B)" -> logger.logAction("validate", "block");
-				case "[V](K)" -> logger.logAction("validate", "key");
-			}
-		}
-
 		if(s.startsWith("[V](K)")){
 			if(s.substring(6).equals(" ")) {
 				motEnCours = "";

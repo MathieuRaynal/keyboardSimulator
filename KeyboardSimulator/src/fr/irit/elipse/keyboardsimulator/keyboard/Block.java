@@ -9,17 +9,17 @@ public class Block extends Area {
 
 	public static final String RACINE = "Layout";
 	private String name;
-	private ArrayList<Area> listOfChilds;
+	private final ArrayList<Area> listOfChilds;
 	private int currentChild;
 
-	public Block(int activationTime){
-		super(activationTime);
+	public Block(){
+		super();
 		listOfChilds = new ArrayList<Area>();
 		init();
 	}
 	
-	public Block(String name, int activationTime){
-		super(activationTime);
+	public Block(String name){
+		super();
 		this.name = name;
 		listOfChilds = new ArrayList<Area>();
 		init();
@@ -142,6 +142,9 @@ public class Block extends Area {
 		return listOfChilds.get(currentChild);
 	}
 
+	// Input handling
+	// =========================================================================
+
 	@Override
 	public void activate(){
 		super.activate();
@@ -150,14 +153,10 @@ public class Block extends Area {
 	
 	@Override
 	public void validate() {
-		if(isActive()){
-			sendInfo("[V](B)"+name);
-			desactivate();
-			getNextChild().activate();
-		}else {
-			getCurrentChild().validate();
-		}
+		sendInfo("[V](B)"+name);
 	}
+
+	// =========================================================================
 	
 	public ArrayList<Area> getChildren() {
 		return listOfChilds;

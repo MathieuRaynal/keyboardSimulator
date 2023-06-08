@@ -1,24 +1,21 @@
 package fr.irit.elipse.keyboardsimulator.gui;
 
 import fr.irit.elipse.keyboardsimulator.interfaces.EyeTracker;
-import fr.irit.elipse.keyboardsimulator.logging.LoggerXML;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class TobiiWidget extends JPanel {
     public static final int GAZE_SIZE = 50;
-    private final LoggerXML logger;
 
     private JFrame window;
     private int eyeX, eyeY;
 
-    public TobiiWidget(EyeTracker tracker, LoggerXML logger) {
+    public TobiiWidget(EyeTracker tracker) {
         this.eyeX = 0;
         this.eyeY = 0;
-        this.logger = logger;
 
-        tracker.setGUI(this);
+        tracker.setTobiiGui(this);
     }
 
     public void setWindow(JFrame window) {
@@ -26,7 +23,7 @@ public class TobiiWidget extends JPanel {
     }
 
     public void onNewEyePosition(float x, float y) {
-        if (logger != null) logger.logEyePosition(x, y);
+        if (window == null) return;
 
         // Convert from values between 0 and 1 to pixels on the screen
         Dimension dims = Toolkit.getDefaultToolkit().getScreenSize();

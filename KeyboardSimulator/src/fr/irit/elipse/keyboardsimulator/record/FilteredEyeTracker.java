@@ -1,5 +1,6 @@
 package fr.irit.elipse.keyboardsimulator.record;
 
+import fr.irit.elipse.keyboardsimulator.LoggerCSV;
 import fr.irit.elipse.keyboardsimulator.gui.TobiiWidget;
 import fr.irit.elipse.keyboardsimulator.interfaces.EyeTracker;
 import tobii.Tobii;
@@ -13,12 +14,13 @@ public class FilteredEyeTracker implements EyeTracker, ActionListener {
     private final int size;
     private TobiiWidget gui;
 
+    private final LoggerXML logger;
     private final Timer timer;
 
-    public FilteredEyeTracker(int bufferSize) {
-
+    public FilteredEyeTracker(LoggerXML logger, int bufferSize) {
         xMean = yMean = 0;
         size = bufferSize;
+        this.logger = logger;
 
         timer = new Timer(20, this);
         timer.start();
@@ -32,7 +34,7 @@ public class FilteredEyeTracker implements EyeTracker, ActionListener {
     }
 
     @Override
-    public void setGUI(TobiiWidget gui) {
+    public void setTobiiGui(TobiiWidget gui) {
         this.gui = gui;
     }
 
@@ -43,6 +45,7 @@ public class FilteredEyeTracker implements EyeTracker, ActionListener {
         xMean = approxRollingAverage(xMean, position[0]);
         yMean = approxRollingAverage(yMean, position[1]);
 
-        gui.onNewEyePosition(xMean, yMean);
+        logger.logEyePosition(xMean, yMean);
+        if (gui != null) gui.onNewEyePosition(xMean, yMean);
     }
 }

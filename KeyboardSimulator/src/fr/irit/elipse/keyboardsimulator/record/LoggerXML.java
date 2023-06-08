@@ -1,4 +1,4 @@
-package fr.irit.elipse.keyboardsimulator.logging;
+package fr.irit.elipse.keyboardsimulator.record;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -9,7 +9,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.awt.geom.Point2D;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,6 +26,7 @@ public class LoggerXML {
 
     private final Document doc;
     private final Element root;
+    private final Element events;
 
     private final Transformer transformer;
 
@@ -35,8 +35,13 @@ public class LoggerXML {
         this.doc = doc;
         this.transformer = transformer;
 
-        this.root = doc.createElement("entries");
+        this.root = doc.createElement("recording");
+        root.setAttribute("date", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+        root.setAttribute("time", new SimpleDateFormat("hh:mm").format(new Date()));
         this.doc.appendChild(this.root);
+
+        this.events = doc.createElement("events");
+        this.root.appendChild(this.events);
 
         this.startTime = System.currentTimeMillis();
     }
@@ -55,15 +60,22 @@ public class LoggerXML {
         }
     }
 
+    public void setKeyboardLayout(String layout) {
+        Element layoutTag = doc.createElement("layout");
+        layoutTag.setTextContent(layout);
+
+        root.insertBefore(layoutTag, events);
+    }
+
     public void log(String entryType, String value) {
         long t = System.currentTimeMillis() - startTime;
 
-        Element entry = doc.createElement("entry");
-        entry.setAttribute("t", String.valueOf(t));
-        entry.setAttribute("type", entryType);
-        entry.setTextContent(value);
+        Element event = doc.createElement("event");
+        event.setAttribute("t", String.valueOf(t));
+        event.setAttribute("type", entryType);
+        event.setTextContent(value);
 
-        root.appendChild(entry);
+        events.appendChild(event);
     }
 
     public void save_to_xml() throws TransformerException {
@@ -72,11 +84,11 @@ public class LoggerXML {
         DOMSource source = new DOMSource(doc);
 
         // write to console or file
-        StreamResult console = new StreamResult(System.out);
+        //StreamResult console = new StreamResult(System.out);
         StreamResult file = new StreamResult(new File(path));
 
         // write data
-        transformer.transform(source, console);
+        //transformer.transform(source, console);
         transformer.transform(source, file);
     }
 
@@ -97,9 +109,8 @@ public class LoggerXML {
         log("eyePosition", text);
     }
 
-    public void logAction(String actionType, String scope) {
-        System.out.println("Hey");
-        String text = actionType + ":" + scope;
+    public void logAction(String actionType, String scope, String areaName) {
+        String text = actionType + ":" + scope + ":" + areaName;
         log("action", text);
     }
 }

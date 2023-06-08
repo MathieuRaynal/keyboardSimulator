@@ -7,15 +7,12 @@ import java.util.*;
 import javax.swing.Timer;
 
 @SuppressWarnings("deprecation")
-public abstract class Area extends Observable implements ActionListener {
+public abstract class Area extends Observable {
 	protected Rectangle2D.Double area;
 	private Block parent;
 	private boolean isSelected, isActive, isValidated;
-	protected Timer activeTimer;
-	
-	
-	public Area(int activationTime){
-		activeTimer = new Timer(activationTime, this);
+
+	public Area(){
 		parent = null;
 	}
 	
@@ -37,24 +34,24 @@ public abstract class Area extends Observable implements ActionListener {
 	
 	public void setSelection(boolean selected){this.isSelected = selected;}
 	public boolean isSelected(){ return isSelected;}
-	
+
+	// Input handling
+	// =========================================================================
+
 	public void activate(){
 		isActive = true;
-		activeTimer.start();
 	}
 	public void desactivate(){
 		isActive = false;
-		activeTimer.stop();
 	}
+
+	public abstract void validate();
+
+	// =========================================================================
+
 	public boolean isActive(){ return isActive;}
 	
 	public boolean isValidated(){ return isValidated;}
-	public abstract void validate();
-	
-	public void actionPerformed(ActionEvent ae) {
-		desactivate();
-		((Block)getParent()).getNextChild().activate();
-	}
 	
 	public void sendInfo(String s) {
 		setChanged(); 
