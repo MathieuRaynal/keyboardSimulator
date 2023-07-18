@@ -9,11 +9,17 @@ import static fr.irit.elipse.keyboardsimulator.KeyboardSimulator.DEFAULT_ACTIVAT
 public class Replay {
 
     public static void main(String[] args) throws Exception {
-        ReplayTimeline timeline = new ReplayTimeline("logs/test-kb.xml");
+        startReplay("logs/test-kb.xml");
+    }
 
+    // =================================================================================================================
+
+    public static void startReplay(String logPath) throws Exception {
+        ReplayTimeline timeline = new ReplayTimeline(logPath);
         Keyboard kb = new Keyboard(timeline.getLayoutId());
 
         new GUIKeyboard(kb, timeline, timeline);
         timeline.runTimeline();
     }
+
 }
